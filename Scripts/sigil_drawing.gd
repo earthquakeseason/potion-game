@@ -52,29 +52,73 @@ func _on_submit_pressed() -> void:
 	pass
 
 func point_resample() -> void:
-	var distance_total: float = 0
-	for i in points.size() - 1:
-		if i == points.size() - 1: continue
-		distance_total += points[i].distance_to(points[i + 1])
-
-	var required_distance_between = distance_total / NUM_POINTS
-	var distance_travelled = 0
-	var temp_points: Array[Vector2]
-	# should probably read up on Curve2D
+	# points too small
+	if points.size() < 2: return
+	var curve: Curve2D = Curve2D.new()
+	for point in points:
+		curve.add_point(point)
+	var total_curve_length: float = curve.get_baked_length()
+	var gap_size: float = total_curve_length / NUM_POINTS - 1
+	var temp_points: Array[Vector2] = []
+	var bounding_points = {"top_right": Vector2(0, 500), "bottom_left": Vector2(500, 0)}
 	for i in NUM_POINTS:
-		if i == points.size() - 1: continue
-		var distance_between: float = points[i].distance_to(points[i + 1])
-		var normal_position: Vector2 = (points[i + 1] - points[i]).normalized() * required_distance_between
-		if normal_position.length() - distance_travelled > distance_between:
-			distance_travelled += distance_between
-		else:
-			distance_travelled = 0
-			temp_points.append(normal_position)
-			paint_texture(normal_position, Color.RED)
-			canvas_texture.update(image)
+		var new_point: Vector2 = curve.sample_baked(i * gap_size)
+		if new_point.x < bounding_points.bottom_left.x:
+			bounding_points.bottom_left.x = new_point.x
+		if new_point.y > bounding_points.bottom_left.y:
+			bounding_points.bottom_left.y = new_point.y
+		if new_point.x > bounding_points.top_right.x:
+			bounding_points.top_right.x = new_point.x
+		if new_point.y < bounding_points.top_right.y:
+			bounding_points.top_right.y = new_point.y
+		temp_points.append(new_point)
+		paint_texture(new_point, Color.RED)
 
-	for i in temp_points.size() - 1:
-		if i == temp_points.size() - 1: continue
-		print(temp_points[i].distance_to(temp_points[i + 1]))
-	print(temp_points)
-	print(required_distance_between)
+	# scaling
+	var size = max(bounding_points.top_right.x - bounding_points.bottom_left.x, bounding_points.top_right.y - bounding_points.bottom_left.y);
+	var scaled_points: Array[Vector2];
+	for i in temp_points.size():
+		var qx = (temp_points[i].x - bounding_points.bottom_left.x) / size;
+		var qy = (temp_points[i].y - bounding_points.bottom_left.y) / size;
+		scaled_points.append(Vector2(qx, qy))
+		
+	# cloud distance
+	
+	for i in scaled_points.size():
+		
+	points = temp_points
+	paint_texture(bounding_points.top_right, Color.ORANGE)
+	paint_texture(bounding_points.bottom_left, Color.GREEN)
+	canvas_texture.update(image)
+
+func distance_with_angle(p1: Vector2, p2: Vector2):
+	var dx = p2.x - p1.y;
+	var dy = p2.y - p1.y;
+	var da = p2.angle() - p1.angle();
+	return sqrt(dx * dx + dy * dy + da * da);
+
+func cloud_distance(p1: Vector2, p2: Vector2):
+	var matched: Array[bool]
+	matched.resize(NUM_POINTS)
+	matched.fill(false)
+	var sum = 0
+	for i in scaled_points.size():
+		var index = -1
+		var min = +INF
+		for j in scaled_points.size():
+			# almost certainly wrong
+			var d = distance_with_angle(scaled_points[i], scaled_points[j]);
+			if (d < min):
+				min = d
+				index = j
+		matched[index] = true
+		sum += min
+	
+	for j in matched.size():
+		if !matched[j]:
+			var min = +INF;
+			for i in scaled_points.size():
+				var d = distance_with_angle(scaled_points[i], scaled_points[j]);
+				if (d < min):
+					min = d
+			sum += min;

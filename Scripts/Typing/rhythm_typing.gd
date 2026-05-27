@@ -8,10 +8,11 @@ const PRESS_RESULT_LABEL = preload("uid://d6870ntks1ks")
 var physical_keycode_options: Array[int] = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]
 var chosen_key: int
 var score: int = 0
+var key_time: float
 
 func _ready() -> void:
 	position = get_viewport().get_visible_rect().size / 2
-	$NewKeyTimer.start(2.1)
+	$NewKeyTimer.start(key_time)
 	get_new_key()
 	$ProgressBar.value = score
 
@@ -56,7 +57,7 @@ func score_gain(time_left: float) -> int:
 func get_new_key() -> void:
 	chosen_key = physical_keycode_options.pick_random()
 	press_label.text = OS.get_keycode_string(chosen_key)
-	$NewKeyTimer.start(2.1)
+	$NewKeyTimer.start(key_time)
 	closing_animation_player.stop()
 	closing_animation_player.play("press_border_shrink")
 	

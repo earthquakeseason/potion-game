@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="Sigil" format=3 uid="uid://d2yejdhdpoblv"]
-
-[ext_resource type="Script" uid="uid://dthta0v0raq8p" path="res://Scripts/sigil_base.gd" id="1_nxd0w"]
-
-[resource]
-script = ExtResource("1_nxd0w")
-metadata/_custom_type_script = "uid://dthta0v0raq8p"

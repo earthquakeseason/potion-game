@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dau3dw7ynlxf4"]
 
-[ext_resource type="Script" uid="uid://cnlq6cprllpiy" path="res://Scripts/rhythm_typing.gd" id="1_tpf68"]
+[ext_resource type="Script" uid="uid://cnlq6cprllpiy" path="res://Scripts/Typing/rhythm_typing.gd" id="1_tpf68"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tpf68"]
 draw_center = false

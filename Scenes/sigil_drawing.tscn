@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://2u4454j5rste"]
 
-[ext_resource type="Script" uid="uid://bp45y5ye2jq27" path="res://Scripts/sigil_drawing.gd" id="1_chiaj"]
+[ext_resource type="Script" uid="uid://bp45y5ye2jq27" path="res://Scripts/Drawing/sigil_drawing.gd" id="1_chiaj"]
 
 [node name="SigilDrawing" type="Node2D" unique_id=1566019245]
 

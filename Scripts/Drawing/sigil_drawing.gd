@@ -1,18 +1,15 @@
 extends Sprite2D
 
-const FLAME_SIGIL = preload("uid://d2yejdhdpoblv")
-
 const NUM_POINTS: int = 32
 const CANVAS_SIZE: int = 250
-const POINT_CLOUD: Array[Vector2] = FLAME_SIGIL.point_cloud
 const RECOGNIZER_SIZE: float = 250.0
-const MATCH_THRESHOLD: float = FLAME_SIGIL.match_threshold
 
 var image: Image
 var canvas_texture: ImageTexture
 var gesture_points: Array[Vector2]
 var normalised_template: Array[Vector2]
 var normalised_template_reverse: Array[Vector2]
+var chosen_sigil: Sigil = Sigils.all_sigils.pick_random()
 
 func _ready() -> void:
 	GameEvents.submit_pressed.connect(_on_submit_pressed)
@@ -21,9 +18,9 @@ func _ready() -> void:
 	canvas_texture = ImageTexture.create_from_image(image)
 	texture = canvas_texture
 	position = get_viewport().get_visible_rect().size / 2
-	normalised_template = normalize_points(POINT_CLOUD)
+	normalised_template = normalize_points(chosen_sigil.point_cloud)
 	# so it isnt direction specific
-	var reversed: Array[Vector2] = POINT_CLOUD.duplicate()
+	var reversed: Array[Vector2] = chosen_sigil.point_cloud.duplicate()
 	reversed.reverse()
 	normalised_template_reverse = normalize_points(reversed)
 
@@ -67,7 +64,7 @@ func recognizable() -> bool:
 	var best_distance: float = min(distance_forward, distance_reverse)
 
 	print(best_distance)
-	return best_distance <= MATCH_THRESHOLD
+	return best_distance <= chosen_sigil.match_threshold
 
 func normalize_points(points: Array[Vector2]) -> Array[Vector2]:
 	var resampled = resample(points)

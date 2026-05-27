@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dwobt7r1ywjtw"]
 
-[ext_resource type="Script" uid="uid://bmow68ajfphe" path="res://Scripts/drawing_screen.gd" id="1_dwt7t"]
+[ext_resource type="Script" uid="uid://bmow68ajfphe" path="res://Scripts/Drawing/drawing_screen.gd" id="1_dwt7t"]
 [ext_resource type="PackedScene" uid="uid://2u4454j5rste" path="res://Scenes/sigil_drawing.tscn" id="1_m8gd5"]
-[ext_resource type="Script" uid="uid://bjp5n567gvgb6" path="res://Scripts/submit_button.gd" id="2_8dlpr"]
-[ext_resource type="Script" uid="uid://c4vt40fu68d48" path="res://Scripts/explanation_label.gd" id="2_bvc6m"]
-[ext_resource type="Script" uid="uid://c7lye40d3h3co" path="res://Scripts/sigil_information.gd" id="3_4c5vp"]
+[ext_resource type="Script" uid="uid://bjp5n567gvgb6" path="res://Scripts/Drawing/submit_button.gd" id="2_8dlpr"]
+[ext_resource type="Script" uid="uid://c4vt40fu68d48" path="res://Scripts/Drawing/explanation_label.gd" id="2_bvc6m"]
+[ext_resource type="Script" uid="uid://c7lye40d3h3co" path="res://Scripts/Drawing/sigil_information.gd" id="3_4c5vp"]
 [ext_resource type="PackedScene" uid="uid://d15q1cskdwk6s" path="res://Scenes/sigil_information_window.tscn" id="4_grh2n"]
 
 [node name="DrawingScreen" type="CanvasLayer" unique_id=420768995]

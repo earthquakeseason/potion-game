@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameEvents="*uid://c06d8i6j4sihb"
+Sigils="*uid://bxt5kqh673hh4"
 
 [dotnet]
 

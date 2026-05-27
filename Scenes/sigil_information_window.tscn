@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d15q1cskdwk6s"]
 
-[ext_resource type="Script" uid="uid://dmplqn7htjhdm" path="res://Scripts/sigil_information_window.gd" id="1_rxmfq"]
+[ext_resource type="Script" uid="uid://dmplqn7htjhdm" path="res://Scripts/Drawing/sigil_information_window.gd" id="1_rxmfq"]
 [ext_resource type="Texture2D" uid="uid://cvhcnpsndm6o5" path="res://Assets/Sigils/fire.png" id="2_tldri"]
 
 [node name="SigilInformationWindow" type="Window" unique_id=269254278]

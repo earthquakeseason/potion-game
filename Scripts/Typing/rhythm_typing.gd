@@ -66,12 +66,8 @@ func key_fail() -> void:
 	add_child(result_label)
 	result_label.show_result("Miss")
 	
-	score -= 150
-	if score <= 0:
-		queue_free()
-		get_tree().change_scene_to_file("res://Scenes/lose_screen.tscn")
-	else:
-		$ProgressBar.value = score
-		get_new_key()
+	score -= min(150, score)
+	$ProgressBar.value = score
+	get_new_key()
 
 func round_to_dec(num, digit: int): return round(num * pow(10.0, digit)) / pow(10.0, digit)

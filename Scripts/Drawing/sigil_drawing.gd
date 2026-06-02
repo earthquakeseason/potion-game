@@ -9,7 +9,7 @@ var canvas_texture: ImageTexture
 var gesture_points: Array[Vector2]
 var normalised_template: Array[Vector2]
 var normalised_template_reverse: Array[Vector2]
-var chosen_sigil: Sigil = Sigils.all_sigils.pick_random()
+var chosen_sigil: Sigil = GameInfo.get_current_minigame()
 
 func _ready() -> void:
 	GameEvents.submit_pressed.connect(_on_submit_pressed)

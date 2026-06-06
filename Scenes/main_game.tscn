@@ -33,3 +33,27 @@ grow_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="NextUpContainer" unique_id=1050507193]
 layout_mode = 2
+
+[node name="GameDetailsContainer" type="PanelContainer" parent="." unique_id=1689190647]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -103.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameDetailsContainer" unique_id=990054403]
+layout_mode = 2
+
+[node name="PotionLabel" type="Label" parent="GameDetailsContainer/VBoxContainer" unique_id=398169444]
+layout_mode = 2
+text = "Potion"
+
+[node name="DemandLabel" type="RichTextLabel" parent="GameDetailsContainer/VBoxContainer" unique_id=1973128002]
+layout_mode = 2
+bbcode_enabled = true
+text = "Demand: "
+fit_content = true

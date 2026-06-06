@@ -4,14 +4,16 @@ extends Node2D
 @onready var closing_animation_player: AnimationPlayer = $ButtonContainer/PressBorder/ClosingAnimationPlayer
 
 const PRESS_RESULT_LABEL = preload("uid://d6870ntks1ks")
+const BASE_ANIMATION_SPEED: int = 2.1
 
 var physical_keycode_options: Array[int] = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]
 var chosen_key: int
 var score: int = 0
-var key_time: float
+var key_time: float = 2.1 / GameInfo.game_speed
 
 func _ready() -> void:
 	position = get_viewport().get_visible_rect().size / 2
+	closing_animation_player.speed_scale = BASE_ANIMATION_SPEED / key_time
 	$NewKeyTimer.start(key_time)
 	get_new_key()
 	$ProgressBar.value = score
@@ -21,19 +23,15 @@ func _input(event) -> void:
 		# because inputeventkey triggers when keys are released and pressed
 		if not event.echo and not event.is_released():
 			if event.physical_keycode == chosen_key:
-				print($NewKeyTimer.time_left)
 				var score_gained: int = score_gain($NewKeyTimer.time_left)
 				score += score_gained
-				print(score_gained)
 				$ProgressBar.value = score
 				if $ProgressBar.value < $ProgressBar.max_value: get_new_key()
 				else: GameEvents.emit_minigame_complete_attempt(true)
 			else:
-				print("pressed wrong key: " + OS.get_keycode_string(event.physical_keycode))
 				key_fail()
 
 func _on_new_key_timer_timeout() -> void:
-	print("timeout triggered")
 	key_fail()
 
 # reward players for doing it as fast as possible
@@ -41,13 +39,13 @@ func score_gain(time_left: float) -> int:
 	var result_label = PRESS_RESULT_LABEL.instantiate()
 	add_child(result_label)
 
-	if time_left > 0.5 && time_left <= 0.9:
+	if time_left > (0.5 / 2) * key_time  && time_left <= (0.9 / 2) * key_time:
 		result_label.show_result("Close")
 		return 10
-	elif time_left > 0.9 && time_left <= 1.1:
+	elif time_left > (0.9 / 2) * key_time && time_left <= (1.1 / 2) * key_time:
 		result_label.show_result("Fine")
 		return 100
-	elif time_left > 1.1 && time_left <= 1.65:
+	elif time_left > (1.1 / 2) * key_time && time_left <= (1.5 / 2) * key_time:
 		result_label.show_result("Good")
 		return 150
 	else:

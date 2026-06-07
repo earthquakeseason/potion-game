@@ -3,4 +3,6 @@ extends Resource
 
 enum MinigameType {TYPING, DRAWING}
 
-@export var minigame_type: MinigameType 
+var minigame_type: MinigameType
+var acceptable_next: Array[Minigame]
+var minigame_name: String

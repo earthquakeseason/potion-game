@@ -4,7 +4,7 @@ extends Node2D
 @onready var closing_animation_player: AnimationPlayer = $ButtonContainer/PressBorder/ClosingAnimationPlayer
 
 const PRESS_RESULT_LABEL = preload("uid://d6870ntks1ks")
-const BASE_ANIMATION_SPEED: int = 2.1
+const BASE_ANIMATION_SPEED: float = 2.1
 
 var physical_keycode_options: Array[int] = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]
 var chosen_key: int

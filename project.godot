@@ -23,8 +23,8 @@ config/icon="res://icon.svg"
 
 GameEvents="*uid://c06d8i6j4sihb"
 Sigils="*uid://bxt5kqh673hh4"
-GameInfo="*uid://ci8qc8mpnmd14"
 TypingOptions="*uid://cso43e8jpi41y"
+GameInfo="*uid://ci8qc8mpnmd14"
 
 [dotnet]
 

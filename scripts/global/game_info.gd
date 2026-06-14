@@ -3,52 +3,35 @@ extends Node
 const PHYSICAL_KEYCODE_OPTIONS: Array[int] = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]
 
 var round_num: int
-var current_round_turn: int
 var current_round_details: Round
 var round_over: bool
 var demand: int
 var game_speed: float = 1.0
+var ingredient_index: int
+var ingredient_step_index: int
 
 func set_base_info() -> void:
-	current_round_turn = 0
-	round_num = 0
 	current_round_details = Round.new()
+	round_num = 0
 	demand = 10
-	generate_round()
+	ingredient_index = 0
+	ingredient_step_index = 0
 
 func increment_turn() -> void:
-	current_round_details.completed_minigames.append(current_round_details.minigame_requirements[current_round_turn])
-	current_round_turn += 1
-	if current_round_details.completed_minigames.size() >= current_round_details.minigame_requirements.size():
+	if current_round_details.selected_potion.ingredients[ingredient_index].secondary_prepration_minigame != null:
+		ingredient_step_index += 1
+		return
+	elif current_round_details.selected_potion.ingredients.size() - 1 > ingredient_index:
+		ingredient_index += 1
+		return
+	else:
 		round_over = true
 
 func _ready() -> void:
 	set_base_info()
 
 func get_current_minigame() -> Minigame:
-	return current_round_details.minigame_requirements[current_round_turn]
-
-func generate_round() -> void:
-	current_round_details.minigame_requirements.clear()
-	var available_minigame_options: Array[Minigame]
-	available_minigame_options.append_array(TypingOptions.all_typing_scenes)
-	available_minigame_options.append_array(Sigils.all_sigils)
-	available_minigame_options.shuffle()
-	for i in range(available_minigame_options.size()):
-		if not available_minigame_options[i].acceptable_next.is_empty():
-			current_round_details.minigame_requirements.append(available_minigame_options[i])
-			break
-	while 0 == 0:
-		if not current_round_details.minigame_requirements.back().acceptable_next.is_empty():
-			print(current_round_details.minigame_requirements.back().minigame_name)
-			var found: bool = false
-			for i in range(current_round_details.minigame_requirements.back().acceptable_next.size()):
-				print(current_round_details.minigame_requirements.back().minigame_name)
-				if not current_round_details.minigame_requirements.has(current_round_details.minigame_requirements.back().acceptable_next[i]):
-					found = true
-					current_round_details.minigame_requirements.append(current_round_details.minigame_requirements.back().acceptable_next[i])
-					break
-			if not found:
-				return
-		else:
-			return
+	if ingredient_step_index == 0:
+		return current_round_details.selected_potion.ingredients[ingredient_index].primary_preperation_minigame
+	else:
+		return current_round_details.selected_potion.ingredients[ingredient_index].secondary_prepration_minigame

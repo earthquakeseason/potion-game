@@ -70,8 +70,8 @@ func normalize_points(points: Array[Vector2]) -> Array[Vector2]:
 	var resampled = resample(points)
 	var rotated = rotate_to_zero(resampled)
 	var scaled = scale_to(rotated, RECOGNIZER_SIZE)
-	var centered_point  = translate_to_origin(scaled)
-	return centered_point
+	var centered_points  = translate_to_origin(scaled)
+	return centered_points
 
 func resample(points: Array[Vector2]) -> Array[Vector2]:
 	# points too small

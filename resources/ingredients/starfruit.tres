@@ -1,10 +1,12 @@
 [gd_resource type="Resource" script_class="Ingredient" format=3 uid="uid://duujlkqfewkdo"]
 
+[ext_resource type="Resource" uid="uid://b6qfm86a2yj1e" path="res://resources/sigils/flame.tres" id="1_52dvg"]
 [ext_resource type="Script" uid="uid://b6fm5nes3hrhy" path="res://scripts/ingredients/ingredient_base.gd" id="1_o1e7k"]
+[ext_resource type="Resource" uid="uid://y8n2nyt1bxe0" path="res://resources/sigils/juicing.tres" id="3_nx1bf"]
 
 [resource]
 script = ExtResource("1_o1e7k")
 name = "Starfruit"
-primary_preperation_type = 3
-secondary_prepration_type = 4
+primary_preperation_minigame = ExtResource("1_52dvg")
+secondary_prepration_minigame = ExtResource("3_nx1bf")
 metadata/_custom_type_script = "uid://b6fm5nes3hrhy"

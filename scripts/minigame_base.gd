@@ -1,8 +1,5 @@
 class_name Minigame
 extends Resource
 
-enum MinigameType {TYPING, DRAWING}
-
-var minigame_type: MinigameType
-var acceptable_next: Array[Minigame]
-var minigame_name: String
+@export_enum("TYPING", "DRAWING") var minigame_type
+@export var minigame_name: String

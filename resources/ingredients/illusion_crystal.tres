@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="Ingredient" format=3 uid="uid://bu3pm1q87q0av"]
 
 [ext_resource type="Script" uid="uid://b6fm5nes3hrhy" path="res://scripts/ingredients/ingredient_base.gd" id="1_nxuut"]
+[ext_resource type="Resource" uid="uid://babiiayer8jn5" path="res://resources/mechanical/crushing.tres" id="1_rr5xg"]
 
 [resource]
 script = ExtResource("1_nxuut")
 name = "Illusion Crystal"
-primary_preperation_type = 0
-secondary_prepration_type = 4
+primary_preperation_minigame = ExtResource("1_rr5xg")
 metadata/_custom_type_script = "uid://b6fm5nes3hrhy"

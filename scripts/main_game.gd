@@ -15,13 +15,12 @@ func _ready() -> void:
 	GameEvents.complete_attempt.connect(_on_complete_attempt)
 	$RoundTimer.start(MAX_TIME)
 	start_turn()
-	for minigame in GameInfo.current_round_details.minigame_requirements:
+	for potion: Potion in GameInfo.current_round_details.selected_potion:
 		var next_up_symbol = TextureRect.new()
-		if (minigame.minigame_type == Minigame.MinigameType.TYPING):
-			print("typing")
+		# todo check primary and secondary
+		if (potion.ingredients[GameInfo.ingredient_index].primary_preperation_minigame.minigame_type == "TYPING"):
 			next_up_symbol.texture = KNIFE
 		else:
-			print("drawing")
 			next_up_symbol.texture = DRAWING
 		$NextUpContainer/HBoxContainer.add_child(next_up_symbol)
 

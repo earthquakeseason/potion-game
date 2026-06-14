@@ -25,7 +25,6 @@ GameEvents="*uid://c06d8i6j4sihb"
 Sigils="*uid://bxt5kqh673hh4"
 Ingredients="*uid://c0iwymxdofyfw"
 Potions="*uid://t2gf5f42n3hq"
-TypingOptions="*uid://cso43e8jpi41y"
 GameInfo="*uid://ci8qc8mpnmd14"
 
 [dotnet]

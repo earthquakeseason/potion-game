@@ -1,10 +1,12 @@
 [gd_resource type="Resource" script_class="Ingredient" format=3 uid="uid://cprekgomiehb8"]
 
+[ext_resource type="Resource" uid="uid://b6qfm86a2yj1e" path="res://resources/sigils/flame.tres" id="1_82hd7"]
 [ext_resource type="Script" uid="uid://b6fm5nes3hrhy" path="res://scripts/ingredients/ingredient_base.gd" id="1_hyshb"]
+[ext_resource type="Resource" uid="uid://doaqteuomv4ko" path="res://resources/sigils/essence_extraction.tres" id="3_oewc3"]
 
 [resource]
 script = ExtResource("1_hyshb")
 name = "Wiggle Wart"
-primary_preperation_type = 2
-secondary_prepration_type = 1
+primary_preperation_minigame = ExtResource("1_82hd7")
+secondary_prepration_minigame = ExtResource("3_oewc3")
 metadata/_custom_type_script = "uid://b6fm5nes3hrhy"

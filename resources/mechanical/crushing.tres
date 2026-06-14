@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Typing" format=3 uid="uid://babiiayer8jn5"]
+
+[ext_resource type="Script" uid="uid://wpitd3feedic" path="res://scripts/keyboard/typing_base.gd" id="1_r5akn"]
+[ext_resource type="PackedScene" uid="uid://b16g7xwgvn2wc" path="res://scenes/keyboard/typing_screen.tscn" id="1_w5bsx"]
+
+[resource]
+script = ExtResource("1_r5akn")
+scene = ExtResource("1_w5bsx")
+minigame_type = 0
+minigame_name = "crushing"
+metadata/_custom_type_script = "uid://wpitd3feedic"

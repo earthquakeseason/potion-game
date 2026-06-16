@@ -9,7 +9,9 @@ var canvas_texture: ImageTexture
 var gesture_points: Array[Vector2]
 var normalised_template: Array[Vector2]
 var normalised_template_reverse: Array[Vector2]
-var chosen_sigil: Sigil = GameInfo.get_current_minigame()
+var chosen_sigil: Sigil
+
+const ESSENCE_EXTRACTION = preload("uid://e6sonp1fgd23")
 
 func _ready() -> void:
 	GameEvents.submit_pressed.connect(_on_submit_pressed)
@@ -18,6 +20,7 @@ func _ready() -> void:
 	canvas_texture = ImageTexture.create_from_image(image)
 	texture = canvas_texture
 	position = get_viewport().get_visible_rect().size / 2
+	chosen_sigil = GameInfo.get_current_minigame()
 	normalised_template = normalize_points(chosen_sigil.point_cloud)
 	# so it isnt direction specific
 	var reversed: Array[Vector2] = chosen_sigil.point_cloud.duplicate()

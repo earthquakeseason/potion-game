@@ -18,7 +18,6 @@ func _ready() -> void:
 	start_turn()
 	potion_label.text = GameInfo.current_round_details.selected_potion.name
 	for ingredient: Ingredient in GameInfo.current_round_details.selected_potion.ingredients:
-		# todo check primary and secondary
 		for minigame: Minigame in ingredient.preperation_minigames:
 			var next_up_symbol = TextureRect.new()
 			if (minigame.minigame_type == Minigame.MinigameTypes.TYPING):
@@ -36,7 +35,11 @@ func _on_complete_attempt(successful: bool) -> void:
 			typing_scene.queue_free()
 		else:
 			drawing_scene.queue_free()
-		next_turn()
+		GameInfo.increment_turn()
+		if GameInfo.round_over:
+			get_tree().change_scene_to_file("res://Scenes/victory_screen.tscn")
+		else:
+			start_turn()
 
 func start_turn() -> void:
 	var minigame_requirement_current: Minigame = GameInfo.get_current_minigame()
@@ -51,10 +54,3 @@ func start_turn() -> void:
 		add_child(drawing_scene)
 		countdown_text_instance.start_animation("Draw!")
 		add_child(countdown_text_instance)
-
-func next_turn() -> void:
-	GameInfo.increment_turn()
-	if GameInfo.round_over:
-		get_tree().change_scene_to_file("res://Scenes/victory_screen.tscn")
-	else:
-		start_turn()

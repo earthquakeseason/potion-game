@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://ba8w116ntbkex"]
 
+[ext_resource type="Script" uid="uid://dta5ip462b7ai" path="res://scripts/round_complete_screen.gd" id="1_wkbhf"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gdhvo"]
 bg_color = Color(0.1882353, 0.1882353, 0.1882353, 0.4627451)
 
@@ -21,6 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_wkbhf")
 
 [node name="BackdropContainer" type="PanelContainer" parent="." unique_id=585058366]
 layout_mode = 1
@@ -46,10 +49,32 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wkbhf")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ContentContainer" unique_id=442382991]
+[node name="VBoxContainerTop" type="VBoxContainer" parent="ContentContainer" unique_id=442382991]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ContentContainer/VBoxContainer" unique_id=1093101390]
+[node name="TitleLabel" type="Label" parent="ContentContainer/VBoxContainerTop" unique_id=1093101390]
 layout_mode = 2
 text = "__ brewed!"
 horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="ContentContainer/VBoxContainerTop" unique_id=1808091744]
+layout_mode = 2
+text = "Time: 0s."
+horizontal_alignment = 1
+
+[node name="Stars" type="Control" parent="ContentContainer/VBoxContainerTop" unique_id=279247347]
+custom_minimum_size = Vector2(375, 250)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainerBottom" type="VBoxContainer" parent="ContentContainer" unique_id=1787373347]
+layout_mode = 2
+alignment = 2
+
+[node name="Button" type="Button" parent="ContentContainer/VBoxContainerBottom" unique_id=345936711]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "Continue"
+
+[connection signal="pressed" from="ContentContainer/VBoxContainerBottom/Button" to="." method="_on_button_pressed"]

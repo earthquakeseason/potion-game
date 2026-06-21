@@ -40,3 +40,6 @@ func _ready() -> void:
 
 func get_current_minigame() -> Minigame:
 	return current_round_details.selected_potion.ingredients[ingredient_index].preperation_minigames[ingredient_step_index]
+
+func update_time_left(current_time: float) -> void:
+	current_round_details.time = current_time

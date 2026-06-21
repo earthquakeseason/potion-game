@@ -4,17 +4,20 @@ const DRAWING_SCREEN: PackedScene = preload("uid://dwobt7r1ywjtw")
 const DRAWING = preload("uid://bil0asoipqfqw")
 const KNIFE = preload("uid://vwiwro34v66g")
 const COUNTDOWN_TEXT = preload("uid://c762pif0pw7e5")
+const ROUND_COMPLETE_SCREEN = preload("uid://ba8w116ntbkex")
 const MAX_TIME: int = 60
 
 var round_time: float
 var drawing_scene: Node
 var typing_scene: Node
+var results_scene: Node
 var selected_potion: Potion
 @onready var demand_label: RichTextLabel = $GameDetailsContainer/VBoxContainer/DemandLabel
 @onready var potion_label: Label = $GameDetailsContainer/VBoxContainer/PotionLabel
 
 func _ready() -> void:
 	GameEvents.complete_attempt.connect(_on_complete_attempt)
+	GameEvents.next_round.connect(_on_next_round)
 	start_round()
 	start_turn()
 
@@ -29,9 +32,18 @@ func _on_complete_attempt(successful: bool) -> void:
 			drawing_scene.queue_free()
 		GameInfo.increment_turn()
 		if GameInfo.round_over:
-			GameInfo.increment_round()
-			start_round()
-		start_turn()
+			results_scene = ROUND_COMPLETE_SCREEN.instantiate()
+			add_child(results_scene)
+			$RoundTimer.stop()
+		else:
+			start_turn()
+		GameInfo.update_time_left($RoundTimer.time_left)
+
+func _on_next_round() -> void:
+	results_scene.queue_free()
+	GameInfo.increment_round()
+	start_turn()
+	start_round()
 
 func start_turn() -> void:
 	var minigame_requirement_current: Minigame = GameInfo.get_current_minigame()
@@ -48,10 +60,6 @@ func start_turn() -> void:
 		add_child(countdown_text_instance)
 
 func start_round() -> void:
-	if GameInfo.round_num > 0:
-		# perhaps add a little animation for how well they did creating the potion
-		pass
-
 	demand_label.text = "Demand: " + str(int((GameInfo.demand - 1) * 100)) + "%"
 	selected_potion = GameInfo.current_round_details.selected_potion
 	round_time = (MAX_TIME * selected_potion.potion_time_modification) / ((1 + (GameInfo.demand - 1)) / 1.5)

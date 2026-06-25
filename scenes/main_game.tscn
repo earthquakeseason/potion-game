@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://du1y3ej46on4x" path="res://scripts/main_game.gd" id="1_s3esy"]
 [ext_resource type="StyleBox" uid="uid://dmffrccp1rsgw" path="res://resources/containers/next_up_container_base.tres" id="2_0rdsr"]
 [ext_resource type="LabelSettings" uid="uid://djmdujcyxyia5" path="res://resources/labels/base_label.tres" id="2_d2op2"]
+[ext_resource type="StyleBox" uid="uid://dnjg28uo3elrn" path="res://resources/containers/progress_bar_empty.tres" id="2_ygxny"]
 [ext_resource type="FontFile" uid="uid://cn70ydj1ldlau" path="res://assets/fonts/friendlyscribbles.ttf" id="3_0rdsr"]
+[ext_resource type="StyleBox" uid="uid://cwamv48x5gubl" path="res://resources/containers/progress_bar_fill.tres" id="3_wi4c7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0rdsr"]
 
@@ -16,16 +18,20 @@ script = ExtResource("1_s3esy")
 anchors_preset = -1
 anchor_left = 0.067
 anchor_right = 1.0
-offset_left = 12.815994
-offset_bottom = 27.0
+offset_left = 23.815994
+offset_top = 3.0
+offset_right = -4.0
+offset_bottom = 30.0
 grow_horizontal = 2
+theme_override_styles/background = ExtResource("2_ygxny")
+theme_override_styles/fill = ExtResource("3_wi4c7")
 show_percentage = false
 
 [node name="TimeLeftLabel" type="Label" parent="." unique_id=633326450]
 offset_left = 4.0
-offset_top = 5.0
+offset_top = 7.0
 offset_right = 90.0
-offset_bottom = 28.0
+offset_bottom = 30.0
 text = "Time left:"
 label_settings = ExtResource("2_d2op2")
 

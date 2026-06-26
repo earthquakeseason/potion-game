@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://bss7jasiy8kja"]
 
 [ext_resource type="Script" uid="uid://c47vih6hekmqu" path="res://scripts/main_menu/start_button.gd" id="1_lbefa"]
+[ext_resource type="LabelSettings" uid="uid://djmdujcyxyia5" path="res://resources/labels/base_label.tres" id="1_lyhl5"]
+[ext_resource type="Texture2D" uid="uid://cqo88l2e72o7s" path="res://assets/symbols/hat.png" id="3_ihen6"]
 
 [node name="StartingScreen" type="CanvasLayer" unique_id=1588621525]
 
@@ -8,12 +10,13 @@
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -49.0
-offset_top = 49.0
-offset_right = 49.0
-offset_bottom = 72.0
+offset_left = -57.0
+offset_top = 140.0
+offset_right = 57.0
+offset_bottom = 163.0
 grow_horizontal = 2
-text = "Potion game"
+text = "Potion game!"
+label_settings = ExtResource("1_lyhl5")
 horizontal_alignment = 1
 
 [node name="StartButton" type="Button" parent="." unique_id=682982162]
@@ -30,5 +33,13 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Start"
 script = ExtResource("1_lbefa")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1477498790]
+offset_left = 408.99988
+offset_top = 39.0
+offset_right = 534.0
+offset_bottom = 173.0
+rotation = -0.27925268
+texture = ExtResource("3_ihen6")
 
 [connection signal="pressed" from="StartButton" to="StartButton" method="_on_pressed"]

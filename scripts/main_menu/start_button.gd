@@ -1,6 +1,6 @@
 extends Button
 
-const SCENE: PackedScene = preload("res://Scenes/main_game.tscn")
+const SCENE: PackedScene = preload("res://scenes/main_game.tscn")
 
 func _on_pressed() -> void:
 	await get_tree().process_frame

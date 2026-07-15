@@ -12,6 +12,8 @@ var target_position: Vector2
 var target_rotation: float = 0.0
 var pending_lock: bool = false
 var final_lock: bool = false
+var time_elapsed: float = 0.0
+var stopwatch_stopped: bool = false
 
 signal display_stars
 
@@ -19,6 +21,10 @@ func _ready() -> void:
 	# feels less harsh than CCD_MODE_CAST_SHAPE (and is supposedly faster), check up on this
 	# again later
 	continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
+
+func _process(delta: float) -> void:
+	if not stopwatch_stopped:
+		time_elapsed += delta
 
 func _physics_process(delta: float) -> void:
 	if grabbed and not freeze:
@@ -62,6 +68,10 @@ func _input(event: InputEvent) -> void:
 			final_lock = true
 			target_position = Vector2(position.x, position.y + 20)
 			display_stars.emit()
+			stopwatch_stopped = true
+			GameInfo.cork_speed = time_elapsed
+			await get_tree().create_timer(1.0).timeout
+			GameEvents.emit_minigame_complete_attempt(true)
 
 func _on_potion_opening_body_entered(body: Node2D) -> void:
 	if body == self:

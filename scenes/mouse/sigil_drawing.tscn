@@ -6,3 +6,5 @@
 
 [node name="SigilCanvas" type="Sprite2D" parent="." unique_id=1439497226]
 script = ExtResource("1_chiaj")
+
+[node name="PathStars" type="Node2D" parent="." unique_id=273213242]

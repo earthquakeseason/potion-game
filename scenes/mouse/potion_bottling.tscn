@@ -1,29 +1,18 @@
 [gd_scene format=3 uid="uid://c47r5qe8xe2ah"]
 
-[ext_resource type="Shader" uid="uid://cehc37vlau5vl" path="res://assets/shaders/potion_liquid.gdshader" id="1_wq45t"]
+[ext_resource type="Script" uid="uid://cgxhqiduqdhh5" path="res://scripts/mouse/potion_bottling.gd" id="1_ft57w"]
 [ext_resource type="Script" uid="uid://cqirnnjlwas42" path="res://scripts/mouse/cork.gd" id="2_2j23a"]
 [ext_resource type="Script" uid="uid://qq8lxewnhtgu" path="res://scripts/mouse/potion_liquid.gd" id="2_7rf0y"]
 [ext_resource type="Texture2D" uid="uid://cowq405yxhb3r" path="res://assets/potions/potion.png" id="2_40df4"]
+[ext_resource type="Material" uid="uid://bg2tyj2jvxhra" path="res://resources/shader_materials/potion_material.tres" id="2_ft57w"]
 [ext_resource type="Texture2D" uid="uid://dslpihyqu8m07" path="res://assets/potions/cork.png" id="3_2j23a"]
 [ext_resource type="Texture2D" uid="uid://cp4ph5k08jxmn" path="res://assets/symbols/star.png" id="4_2j23a"]
 [ext_resource type="Script" uid="uid://dchw64sops14i" path="res://scripts/mouse/star_particles_2d.gd" id="5_ypklg"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7rf0y"]
-shader = ExtResource("1_wq45t")
-shader_parameter/potion_color = Color(0, 0, 0, 1)
-shader_parameter/fill_level = 0.59200002812
-shader_parameter/amplitude = 0.034000001615
-shader_parameter/frequency = 10.4390004958525
-shader_parameter/speed = 0.800000038
-shader_parameter/pixel_size = 71.08700299663249
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_wq45t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wq45t"]
 size = Vector2(50, 20)
-
-[sub_resource type="Gradient" id="Gradient_ypklg"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_40df4"]
 size = Vector2(13, 18)
@@ -34,7 +23,72 @@ size = Vector2(15, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ypklg"]
 size = Vector2(63, 20)
 
+[sub_resource type="Gradient" id="Gradient_ypklg"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Animation" id="Animation_ft57w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PotionSprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Cork/CorkSprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7rf0y"]
+resource_name = "potion_fade_out"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PotionSprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Cork/CorkSprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ft57w"]
+_data = {
+&"RESET": SubResource("Animation_ft57w"),
+&"potion_fade_out": SubResource("Animation_7rf0y")
+}
+
 [node name="PotionBottling" type="Node2D" unique_id=396043944]
+script = ExtResource("1_ft57w")
 
 [node name="Potion" type="StaticBody2D" parent="." unique_id=1067066266]
 position = Vector2(570, 457)
@@ -43,9 +97,9 @@ input_pickable = true
 metadata/_edit_lock_ = true
 
 [node name="PotionLiquid" type="Sprite2D" parent="Potion" unique_id=49710663]
-material = SubResource("ShaderMaterial_7rf0y")
-position = Vector2(0.8333366, 11.333338)
-scale = Vector2(71.66669, 78.66667)
+material = ExtResource("2_ft57w")
+position = Vector2(0.4999985, 11.3333435)
+scale = Vector2(72.33334, 78.66667)
 texture = SubResource("CanvasTexture_wq45t")
 script = ExtResource("2_7rf0y")
 
@@ -64,29 +118,6 @@ scale = Vector2(0.33333334, 0.33333334)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Potion/PotionOpening" unique_id=73501369]
 shape = SubResource("RectangleShape2D_wq45t")
 metadata/_edit_lock_ = true
-
-[node name="StarParticles2D" type="CPUParticles2D" parent="Potion" unique_id=558531788]
-position = Vector2(-0.6666565, -37)
-scale = Vector2(0.33333334, 0.33333334)
-emitting = false
-amount = 12
-texture = ExtResource("4_2j23a")
-lifetime = 2.0
-one_shot = true
-explosiveness = 0.9
-direction = Vector2(0, -1)
-spread = 20.0
-gravity = Vector2(0, 200)
-initial_velocity_min = 140.0
-initial_velocity_max = 140.0
-angular_velocity_min = 30.0
-angular_velocity_max = 60.0
-angle_min = -45.0
-angle_max = 45.0
-scale_amount_min = 0.1
-scale_amount_max = 0.1
-color_ramp = SubResource("Gradient_ypklg")
-script = ExtResource("5_ypklg")
 
 [node name="Cork" type="RigidBody2D" parent="." unique_id=1387004191]
 position = Vector2(825, 603)
@@ -117,7 +148,34 @@ scale = Vector2(20.351822, -0.4488665)
 shape = SubResource("RectangleShape2D_ypklg")
 metadata/_edit_lock_ = true
 
+[node name="StarParticles2D" type="CPUParticles2D" parent="." unique_id=558531788]
+position = Vector2(568, 346.00003)
+scale = Vector2(0.99999994, 1)
+emitting = false
+amount = 12
+texture = ExtResource("4_2j23a")
+lifetime = 2.0
+one_shot = true
+explosiveness = 0.9
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 140.0
+initial_velocity_max = 140.0
+angular_velocity_min = 30.0
+angular_velocity_max = 60.0
+angle_min = -45.0
+angle_max = 45.0
+scale_amount_min = 0.1
+scale_amount_max = 0.1
+color_ramp = SubResource("Gradient_ypklg")
+script = ExtResource("5_ypklg")
+
+[node name="PotionPlayer" type="AnimationPlayer" parent="." unique_id=902962379]
+root_node = NodePath("../Potion")
+libraries/ = SubResource("AnimationLibrary_ft57w")
+
 [connection signal="body_entered" from="Potion/PotionOpening" to="Cork" method="_on_potion_opening_body_entered"]
-[connection signal="display_stars" from="Cork" to="Potion/StarParticles2D" method="_on_cork_display_stars"]
+[connection signal="display_stars" from="Cork" to="StarParticles2D" method="_on_cork_display_stars"]
 [connection signal="mouse_entered" from="Cork" to="Cork" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Cork" to="Cork" method="_on_mouse_exited"]

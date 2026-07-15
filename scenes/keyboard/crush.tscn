@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bsmobqj58qnh6"]
+
+[ext_resource type="Script" uid="uid://cy13va8i7i7pq" path="res://scripts/keyboard/crush.gd" id="1_uua4o"]
+[ext_resource type="Texture2D" uid="uid://cyw4nij8a8j3t" path="res://assets/mechanical/mortar.png" id="1_xl7wr"]
+[ext_resource type="Texture2D" uid="uid://crys2vlv74ur3" path="res://assets/ingredients/heart_crystal.png" id="2_uua4o"]
+[ext_resource type="Texture2D" uid="uid://dm71nylya8lq8" path="res://assets/mechanical/pestle.png" id="3_44sse"]
+
+[node name="Crush" type="Node2D" unique_id=1400525281]
+script = ExtResource("1_uua4o")
+
+[node name="Mortar" type="Sprite2D" parent="." unique_id=2017076277]
+texture = ExtResource("1_xl7wr")
+
+[node name="Ingredient" type="Sprite2D" parent="." unique_id=81419208]
+position = Vector2(-0.345, 7.375)
+scale = Vector2(0.145, 0.145)
+texture = ExtResource("2_uua4o")
+offset = Vector2(0, -62.88)
+
+[node name="Pestle" type="Sprite2D" parent="." unique_id=2132364822]
+position = Vector2(0, -22)
+texture = ExtResource("3_44sse")

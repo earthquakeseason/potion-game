@@ -5,6 +5,7 @@ const CANVAS_SIZE: int = 250
 const RECOGNIZER_SIZE: float = 250.0
 const FAIL_SYMBOL: PackedScene = preload("uid://dawarawgixbne")
 const NOTE_ALT: CompressedTexture2D = preload("uid://b56qkovby3ft8")
+const STAR_PATH = preload("res://assets/symbols/star_path.png")
 
 var background_image: Image
 var canvas_texture: ImageTexture
@@ -12,6 +13,9 @@ var gesture_points: Array[Vector2]
 var normalised_template: Array[Vector2]
 var normalised_template_reverse: Array[Vector2]
 var chosen_sigil: Sigil
+var point_index: int
+var path_star_postions: Array[Vector2]
+@onready var path_stars: Node2D = $"../PathStars"
 
 func _ready() -> void:
 	GameEvents.submit_pressed.connect(_on_submit_pressed)
@@ -23,9 +27,24 @@ func _ready() -> void:
 	var reversed: Array[Vector2] = chosen_sigil.point_cloud.duplicate()
 	reversed.reverse()
 	normalised_template_reverse = normalize_points(reversed)
+	var _display_points: Array[Vector2] = normalize_for_display(normalised_template_reverse)
+	#for i in range(3):
+		#var tween: Tween = create_tween()
+		#var sprite: Sprite2D = Sprite2D.new()
+		#sprite.texture = STAR_PATH
+		#sprite.position = display_points[i]
+		#sprite.self_modulate = Color(1.0, 1.0, 1.0, 0.0)
+		#path_stars.add_child(sprite)
+		#tween.tween_property(sprite, "self_modulate", Color(1.0, 1.0, 1.0), 1.0)
 
 func paint_texture(pos: Vector2i, paint_color: Color) -> void:
 	background_image.fill_rect(Rect2i(pos, Vector2i(1,1)).grow(3), paint_color)
+
+func normalize_for_display(points: Array[Vector2]) -> Array[Vector2]:
+	var resampled = resample(points)
+	var scaled = scale_to(resampled, RECOGNIZER_SIZE)
+	var centered_points = translate_to_origin(scaled)
+	return centered_points
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("left_click"):
@@ -50,16 +69,21 @@ func _input(event: InputEvent) -> void:
 					impos = impos.move_toward(target_pos, 1)
 					paint_texture(impos, Color.BLACK)
 					gesture_points.append(impos)
+			#for point in range(path_star_postions):
+				#if get_global_mouse_position().distance_to(path_star_postions[point]) < 1.0:
+					#path_stars.get_child(point)
 
 func _on_submit_pressed() -> void:
 	if recognizable():
 		GameEvents.emit_minigame_complete_attempt(true)
+		GameInfo.drawing_accuracy += 1
 	else:
 		GameEvents.emit_minigame_complete_attempt(false)
 		var fail_symbol: TextureRect = FAIL_SYMBOL.instantiate()
 		add_child(fail_symbol)
 		fail_symbol.position = position - Vector2(690, 460)
 		set_blank_canvas()
+		GameInfo.drawing_accuracy -= 1
 
 func recognizable() -> bool:
 	if gesture_points.size() < 2: return false
@@ -80,7 +104,7 @@ func normalize_points(points: Array[Vector2]) -> Array[Vector2]:
 
 func resample(points: Array[Vector2]) -> Array[Vector2]:
 	if points.size() < 2:
-		print("not enough points...")
+		push_error("not enough points...")
 		return points.duplicate()
 	var curve: Curve2D = Curve2D.new()
 	for i in range(points.size()):

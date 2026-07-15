@@ -1,9 +1,8 @@
 [gd_scene format=3 uid="uid://dau3dw7ynlxf4"]
 
 [ext_resource type="Script" uid="uid://cnlq6cprllpiy" path="res://scripts/keyboard/cutting.gd" id="1_t0b7i"]
-[ext_resource type="StyleBox" uid="uid://dnjg28uo3elrn" path="res://resources/containers/progress_bar_empty.tres" id="2_36nqy"]
 [ext_resource type="LabelSettings" uid="uid://djmdujcyxyia5" path="res://resources/labels/base_label.tres" id="2_nai40"]
-[ext_resource type="StyleBox" uid="uid://cwamv48x5gubl" path="res://resources/containers/progress_bar_fill.tres" id="3_whk8t"]
+[ext_resource type="PackedScene" uid="uid://bsmobqj58qnh6" path="res://scenes/keyboard/crush.tscn" id="3_yyghg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tpf68"]
 draw_center = false
@@ -84,17 +83,6 @@ script = ExtResource("1_t0b7i")
 [node name="NewKeyTimer" type="Timer" parent="." unique_id=1365243089]
 one_shot = true
 
-[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1251639567]
-custom_minimum_size = Vector2(200, 0)
-offset_left = -100.0
-offset_top = -57.0
-offset_right = 100.0
-offset_bottom = -30.0
-theme_override_styles/background = ExtResource("2_36nqy")
-theme_override_styles/fill = ExtResource("3_whk8t")
-max_value = 1500.0
-show_percentage = false
-
 [node name="InstructionLabel" type="Label" parent="." unique_id=683889864]
 anchors_preset = 5
 anchor_left = 0.5
@@ -149,5 +137,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_tpf68")
 [node name="ClosingAnimationPlayer" type="AnimationPlayer" parent="ButtonContainer/PressBorder" unique_id=1441156711]
 root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_uy4aq")
+
+[node name="Crush" parent="." unique_id=1400525281 instance=ExtResource("3_yyghg")]
+position = Vector2(294, 119)
+scale = Vector2(2, 2)
 
 [connection signal="timeout" from="NewKeyTimer" to="." method="_on_new_key_timer_timeout"]

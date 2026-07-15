@@ -6,18 +6,19 @@ extends Node2D
 const PRESS_RESULT_LABEL = preload("uid://d6870ntks1ks")
 const BASE_ANIMATION_SPEED: float = 2.1
 const BASE_MAX_SCORE: int = 1500
+## 5 total stages, not starting at 0
+const INGREDIENT_STAGES_COUNT: int = 5
 
 var chosen_key: int
 var score: int = 0
 var key_time: float = 2.1 / (1 + (((float)(GameInfo.round_num)) / 15))
 var first_key: bool = false
+var ingredient_stage_counter: int = 0
 
 func _ready() -> void:
 	position = get_viewport().get_visible_rect().size / 2
 	first_key = true
 	get_new_key()
-	$ProgressBar.max_value = BASE_MAX_SCORE
-	$ProgressBar.value = score
 
 func _input(event) -> void:
 	if event is InputEventKey:
@@ -26,11 +27,15 @@ func _input(event) -> void:
 			if event.physical_keycode == chosen_key:
 				var score_gained: int = score_gain($NewKeyTimer.time_left)
 				score += score_gained
-				$ProgressBar.value = score
 				if score < BASE_MAX_SCORE:
 					get_new_key()
+					ingredient_stage_counter += score_gained
 				else:
 					GameEvents.emit_minigame_complete_attempt(true)
+					GameInfo.typing_accuracy += 1
+				if ingredient_stage_counter >= float(BASE_MAX_SCORE) / 10:
+					ingredient_stage_counter = 0
+					GameEvents.emit_increment_mechanical_stage()
 			else:
 				key_fail()
 
@@ -73,9 +78,8 @@ func key_fail() -> void:
 	var result_label = PRESS_RESULT_LABEL.instantiate()
 	add_child(result_label)
 	result_label.show_result("Miss")
-	
+	GameInfo.typing_accuracy -= 1
 	score -= min(150, score)
-	$ProgressBar.value = score
 	get_new_key()
 
 func round_to_dec(num, digit: int): return round(num * pow(10.0, digit)) / pow(10.0, digit)

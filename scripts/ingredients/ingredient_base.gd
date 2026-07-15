@@ -3,3 +3,5 @@ extends Resource
 
 @export var name: String
 @export var preperation_minigames: Array[Minigame]
+@export var initial_state: Texture2D
+@export var final_state: Texture2D

@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://b16g7xwgvn2wc"]
-
-[ext_resource type="PackedScene" uid="uid://dau3dw7ynlxf4" path="res://scenes/keyboard/basic_typing.tscn" id="1_ls4md"]
-
-[node name="TypingScreen" type="CanvasLayer" unique_id=729622462]
-
-[node name="RhythmTyping" parent="." unique_id=2001079599 instance=ExtResource("1_ls4md")]

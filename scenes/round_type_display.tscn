@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://c762pif0pw7e5"]
 
-[ext_resource type="Script" uid="uid://2sg6k0kknhyd" path="res://scripts/countdown_text.gd" id="1_beg7k"]
-[ext_resource type="FontFile" uid="uid://cx03xwpxh2tyi" path="res://assets/fonts/Neuton-ExtraBold.ttf" id="2_ix4o4"]
+[ext_resource type="Script" uid="uid://2sg6k0kknhyd" path="res://scripts/countdown_text.gd" id="1_8ewqu"]
+[ext_resource type="FontFile" uid="uid://cx03xwpxh2tyi" path="res://assets/fonts/Neuton-ExtraBold.ttf" id="2_lxmbc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_412jk"]
-font = ExtResource("2_ix4o4")
+font = ExtResource("2_lxmbc")
 font_size = 64
 outline_size = 20
 outline_color = Color(0, 0, 0, 1)
@@ -14,7 +14,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CountdownLabel:self_modulate")
+tracks/0/path = NodePath("TypeLabel:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -26,7 +26,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CountdownLabel:scale")
+tracks/1/path = NodePath("TypeLabel:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -38,7 +38,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CountdownLabel:rotation")
+tracks/2/path = NodePath("TypeLabel:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -54,7 +54,7 @@ length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CountdownLabel:self_modulate")
+tracks/0/path = NodePath("TypeLabel:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -66,7 +66,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CountdownLabel:scale")
+tracks/1/path = NodePath("TypeLabel:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -78,7 +78,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = false
-tracks/2/path = NodePath("CountdownLabel:rotation")
+tracks/2/path = NodePath("TypeLabel:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -94,7 +94,7 @@ _data = {
 &"text_spawn_animation": SubResource("Animation_412jk")
 }
 
-[node name="CountdownText" type="Control" unique_id=137579906]
+[node name="RoundTypeDisplay" type="Control" unique_id=137579906]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -102,9 +102,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("1_beg7k")
+script = ExtResource("1_8ewqu")
 
-[node name="CountdownLabel" type="Label" parent="." unique_id=1437102199]
+[node name="TypeLabel" type="Label" parent="." unique_id=1437102199]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 8
@@ -126,8 +126,5 @@ horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1026369168]
 libraries/ = SubResource("AnimationLibrary_k8ul6")
-
-[node name="Timer" type="Timer" parent="." unique_id=1792565210]
-one_shot = true
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

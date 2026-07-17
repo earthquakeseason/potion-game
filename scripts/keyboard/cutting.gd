@@ -1,14 +1,10 @@
 extends Node2D
 
-@onready var press_label: Label = $ButtonContainer/PressContainer/PressLabel
-@onready var closing_animation_player: AnimationPlayer = $ButtonContainer/PressBorder/ClosingAnimationPlayer
-
 const PRESS_RESULT_LABEL = preload("uid://d6870ntks1ks")
 const BASE_ANIMATION_SPEED: float = 2.1
 const BASE_MAX_SCORE: int = 1500
 ## 5 total stages, not starting at 0
 const INGREDIENT_STAGES_COUNT: int = 5
-# scenes
 const CRUSH = preload("res://scenes/keyboard/crush.tscn")
 const SLICE = preload("res://scenes/keyboard/slice.tscn")
 
@@ -18,17 +14,20 @@ var key_time: float = 2.1 / (1 + (((float)(GameInfo.round_num)) / 15))
 var first_key: bool = false
 var ingredient_stage_counter: int = 0
 var current_minigame: Minigame
+@onready var press_label: Label = $ButtonContainer/PressContainer/PressLabel
+@onready var closing_animation_player: AnimationPlayer = $ButtonContainer/PressBorder/ClosingAnimationPlayer
 
 func _ready() -> void:
 	current_minigame = GameInfo.get_current_minigame()
-	if current_minigame.get_current_minigame() == GameInfo.CRUSHING:
+	# why can't i preload these resources? nobody knows
+	if current_minigame == load("res://resources/mechanical/crushing.tres"):
 		var crush_instance: Node = CRUSH.instantiate()
-		crush_instance.position.x = -500 
+		crush_instance.position.x = -400 
 		add_child(crush_instance)
 	# technically could be else as ideally it could never be anything else but you never know i guess
-	elif current_minigame.get_current_minigame() == GameInfo.CUTTING:
+	elif current_minigame == load("res://resources/mechanical/cutting.tres"):
 		var slice_instance: Node = SLICE.instantiate()
-		slice_instance.position.x = -500 
+		slice_instance.position.x = -400 
 		add_child(slice_instance)
 
 	position = get_viewport().get_visible_rect().size / 2
@@ -44,13 +43,18 @@ func _input(event) -> void:
 				score += score_gained
 				if score < BASE_MAX_SCORE:
 					get_new_key()
+					print("original: " + str(ingredient_stage_counter))
 					ingredient_stage_counter += score_gained
+					print("new: " + str(ingredient_stage_counter))
 				else:
 					GameEvents.emit_minigame_complete_attempt(true)
 					GameInfo.typing_accuracy += 1
-				if ingredient_stage_counter >= float(BASE_MAX_SCORE) / 10:
+				if ingredient_stage_counter >= float(BASE_MAX_SCORE) / 6:
 					ingredient_stage_counter = 0
-					GameEvents.emit_increment_mechanical_stage()
+					GameEvents.emit_increment_mechanical_stage(true)
+					print("trigged")
+				else:
+					GameEvents.emit_increment_mechanical_stage(false)
 			else:
 				key_fail()
 

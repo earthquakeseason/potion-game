@@ -4,7 +4,7 @@ const DRAWING_SCREEN: PackedScene = preload("uid://dwobt7r1ywjtw")
 const DRAWING = preload("uid://bil0asoipqfqw")
 const KNIFE = preload("uid://vwiwro34v66g")
 const POTION = preload("uid://b01ve6h62ss44")
-const COUNTDOWN_TEXT = preload("uid://c762pif0pw7e5")
+const ROUND_TYPE_DISPLAY = preload("res://scenes/round_type_display.tscn")
 const ROUND_COMPLETE_SCREEN = preload("uid://ba8w116ntbkex")
 const NEXT_UP_CONTAINER_BASE = preload("uid://dmffrccp1rsgw")
 const NEXT_UP_CONTAINER_CURRENT = preload("uid://cuc63iatlc1ai")
@@ -82,7 +82,7 @@ func create_next_up_container(texture: Texture2D) -> PanelContainer:
 
 func start_turn() -> void:
 	var minigame: Minigame = GameInfo.get_current_minigame()
-	var countdown = COUNTDOWN_TEXT.instantiate()
+	var round_type_display = ROUND_TYPE_DISPLAY.instantiate()
 	var text: String
 
 	match minigame.minigame_type:
@@ -99,8 +99,8 @@ func start_turn() -> void:
 			text = "Bottle!"
 
 	add_child(game_scene)
-	countdown.start_animation(text)
-	add_child(countdown)
+	round_type_display.start_animation(text)
+	add_child(round_type_display)
 
 	var current_ingredient_position = GameInfo.total_ingredient_step
 	var current_next_box: PanelContainer = next_up_h_box.get_child(current_ingredient_position)

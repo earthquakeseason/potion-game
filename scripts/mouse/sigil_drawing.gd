@@ -3,9 +3,13 @@ extends Sprite2D
 const NUM_POINTS: int = 32
 const CANVAS_SIZE: int = 250
 const RECOGNIZER_SIZE: float = 250.0
+const STROKE_RADIUS: int = 5
+const DRAWING_RADIUS: int = 3
 const FAIL_SYMBOL: PackedScene = preload("uid://dawarawgixbne")
 const NOTE_ALT: CompressedTexture2D = preload("uid://b56qkovby3ft8")
 const STAR_PATH = preload("res://assets/symbols/star_path.png")
+const DRAWING_COLOR: Color = Color.WHITE
+const STROKE_COLOR: Color = Color("88009e")
 
 var background_image: Image
 var canvas_texture: ImageTexture
@@ -15,6 +19,8 @@ var normalised_template_reverse: Array[Vector2]
 var chosen_sigil: Sigil
 var point_index: int
 var path_star_postions: Array[Vector2]
+var stroke_brush: Image
+var drawing_brush: Image
 @onready var path_stars: Node2D = $"../PathStars"
 
 func _ready() -> void:
@@ -23,28 +29,36 @@ func _ready() -> void:
 	position = get_viewport().get_visible_rect().size / 2
 	chosen_sigil = GameInfo.get_current_minigame()
 	normalised_template = normalize_points(chosen_sigil.point_cloud)
+
 	# so it isnt direction specific
 	var reversed: Array[Vector2] = chosen_sigil.point_cloud.duplicate()
 	reversed.reverse()
 	normalised_template_reverse = normalize_points(reversed)
-	var _display_points: Array[Vector2] = normalize_for_display(normalised_template_reverse)
-	#for i in range(3):
-		#var tween: Tween = create_tween()
-		#var sprite: Sprite2D = Sprite2D.new()
-		#sprite.texture = STAR_PATH
-		#sprite.position = display_points[i]
-		#sprite.self_modulate = Color(1.0, 1.0, 1.0, 0.0)
-		#path_stars.add_child(sprite)
-		#tween.tween_property(sprite, "self_modulate", Color(1.0, 1.0, 1.0), 1.0)
+	
+	stroke_brush = create_circle_brush(STROKE_RADIUS, STROKE_COLOR)
+	drawing_brush = create_circle_brush(DRAWING_RADIUS, DRAWING_COLOR)
 
-func paint_texture(pos: Vector2i, paint_color: Color) -> void:
-	background_image.fill_rect(Rect2i(pos, Vector2i(1,1)).grow(3), paint_color)
+# should hopefully make drawing the circle less laggy... (todo: check this later)
+func create_circle_brush(radius: int, color: Color) -> Image:
+	var diameter: int = radius * 2
+	var brush_image: Image = Image.create_empty(diameter, diameter, false, Image.FORMAT_RGBA8)
+
+	for y: int in range(diameter):
+		for x: int in range(diameter):
+			var distance_from_center : Vector2 = Vector2i(x, y) - Vector2i(radius, radius)
+			if distance_from_center.x * distance_from_center.x + distance_from_center.y * distance_from_center.y <= (radius * radius):
+				brush_image.set_pixel(x, y, color)
+	return brush_image
+
+func paint_texture(pos: Vector2i) -> void:
+	draw_image_brush(stroke_brush, pos, STROKE_RADIUS)
+	draw_image_brush(drawing_brush, pos, DRAWING_RADIUS)
+
+func draw_image_brush(brush: Image, pos: Vector2i, radius: int) -> void:
+	background_image.blit_rect_mask(brush, brush, Rect2i(Vector2i.ZERO, brush.get_size()), pos - Vector2i(radius, radius))
 
 func normalize_for_display(points: Array[Vector2]) -> Array[Vector2]:
-	var resampled = resample(points)
-	var scaled = scale_to(resampled, RECOGNIZER_SIZE)
-	var centered_points = translate_to_origin(scaled)
-	return centered_points
+	return translate_to_origin(scale_to(resample(points), RECOGNIZER_SIZE))
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("left_click"):
@@ -53,21 +67,21 @@ func _input(event: InputEvent) -> void:
 		set_blank_canvas()
 		var pos = to_local(event.position)
 		var impos = pos + get_rect().size / 2.0
-		paint_texture(impos, Color.BLACK)
+		paint_texture(impos)
 		gesture_points.append(impos)
 		canvas_texture.update(background_image)
 	elif event is InputEventMouseMotion:
 		if Input.is_action_pressed("left_click"):
 			var pos: Vector2 = to_local(event.position)
 			var impos: Vector2 = pos + get_rect().size / 2.0
-			paint_texture(impos, Color.BLACK)
+			paint_texture(impos)
 			canvas_texture.update(background_image)
 			if event.relative.length_squared() > 0:
-				var num = ceili(event.relative.length())
-				var target_pos = impos - (event.relative)
-				for i in num:
+				var num: int = ceili(event.relative.length())
+				var target_pos: Vector2 = impos - (event.relative)
+				for i: int in num:
 					impos = impos.move_toward(target_pos, 1)
-					paint_texture(impos, Color.BLACK)
+					paint_texture(impos)
 					gesture_points.append(impos)
 			#for point in range(path_star_postions):
 				#if get_global_mouse_position().distance_to(path_star_postions[point]) < 1.0:
@@ -173,7 +187,7 @@ func translate_to_origin(points: Array[Vector2]) -> Array[Vector2]:
 func calculate_path_distance(drawing: Array[Vector2], template: Array[Vector2]) -> float:
 	var total: float = 0.0
 	var smallest_size: int = min(drawing.size(), template.size())
-	for i in smallest_size:
+	for i in range(smallest_size):
 		total += drawing[i].distance_to(template[i])
 	return total / smallest_size
 

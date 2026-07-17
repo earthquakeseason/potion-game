@@ -3,9 +3,6 @@ extends Node
 const PHYSICAL_KEYCODE_OPTIONS: Array[int] = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]
 const MAX_TIME: int = 45
 const VICTORY_SCREEN = preload("res://scenes/victory_screen.tscn")
-# mechanical minigames
-const CRUSHING = preload("res://resources/mechanical/crushing.tres")
-const CUTTING = preload("res://resources/mechanical/cutting.tres")
 
 var round_num: int
 var current_round_details: Round

@@ -1,10 +1,10 @@
 extends Control
 
-func start_animation(countdown_text: String) -> void:
+func start_animation(type_text: String) -> void:
 	var target_rotation: float = randf_range(-10, 10)
 	var tween: Tween = create_tween()
-	tween.tween_property($CountdownLabel, "rotation", deg_to_rad(target_rotation), 0.45).set_ease(Tween.EASE_OUT)
-	$CountdownLabel.text = countdown_text
+	tween.tween_property($TypeLabel, "rotation", deg_to_rad(target_rotation), 0.45).set_ease(Tween.EASE_OUT)
+	$TypeLabel.text = type_text
 	$AnimationPlayer.play("text_spawn_animation")
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

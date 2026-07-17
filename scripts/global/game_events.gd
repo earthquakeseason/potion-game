@@ -19,5 +19,5 @@ func emit_next_round() -> void:
 func emit_round_transition() -> void:
 	round_transition.emit()
 
-func emit_increment_mechanical_stage() -> void:
-	increment_mechanical_stage.emit()
+func emit_increment_mechanical_stage(shrink: bool) -> void:
+	increment_mechanical_stage.emit(shrink)

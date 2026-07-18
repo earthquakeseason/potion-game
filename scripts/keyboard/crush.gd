@@ -1,5 +1,7 @@
 extends Node2D
 
+const INITIAL_POSITION: Vector2 = Vector2(0.0, -15.0)
+
 var increment_stage: int = 0
 var original_y_scale: float
 var current_ingredient: Ingredient = GameInfo.get_current_ingredient()
@@ -21,8 +23,8 @@ func _on_game_event_increment(shrink: bool) -> void:
 		update_bottom_anchor()
 
 	var tween: Tween = create_tween()
-	tween.tween_property($Pestle, "position", Vector2($Pestle.position.x, $Ingredient.position.y - ($Ingredient.get_rect().size.y / 2)), 0.1)
-	tween.tween_property($Pestle, "position", Vector2($Pestle.position.x, -64.0), 0.1)
+	tween.tween_property($Pestle, "position", Vector2(INITIAL_POSITION.x, $Ingredient.position.y - ($Ingredient.get_rect().size.y / 2)), 0.1)
+	tween.tween_property($Pestle, "position", Vector2(INITIAL_POSITION), 0.1)
 
 func update_bottom_anchor() -> void:
 	$Ingredient.offset.y = ((115.0 - $Ingredient.position.y) / $Ingredient.scale.y) - ($Ingredient.texture.get_size().y * 0.5)

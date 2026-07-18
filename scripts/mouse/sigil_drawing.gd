@@ -61,6 +61,9 @@ func normalize_for_display(points: Array[Vector2]) -> Array[Vector2]:
 	return translate_to_origin(scale_to(resample(points), RECOGNIZER_SIZE))
 
 func _input(event: InputEvent) -> void:
+	if GameInfo.game_paused:
+		return
+
 	if Input.is_action_just_pressed("left_click"):
 		var local_pos = to_local(event.position)
 		if !get_rect().has_point(local_pos): return

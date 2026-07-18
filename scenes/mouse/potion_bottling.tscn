@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://qq8lxewnhtgu" path="res://scripts/mouse/potion_liquid.gd" id="2_7rf0y"]
 [ext_resource type="Texture2D" uid="uid://cowq405yxhb3r" path="res://assets/potions/potion.png" id="2_40df4"]
 [ext_resource type="Material" uid="uid://bg2tyj2jvxhra" path="res://resources/shader_materials/potion_material.tres" id="2_ft57w"]
-[ext_resource type="Texture2D" uid="uid://dslpihyqu8m07" path="res://assets/potions/cork.png" id="3_2j23a"]
 [ext_resource type="Texture2D" uid="uid://cp4ph5k08jxmn" path="res://assets/symbols/star.png" id="4_2j23a"]
 [ext_resource type="Script" uid="uid://dchw64sops14i" path="res://scripts/mouse/star_particles_2d.gd" id="5_ypklg"]
 
@@ -13,6 +12,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wq45t"]
 size = Vector2(50, 20)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7rf0y"]
+load_path = "res://.godot/imported/cork.png-153e201e6b4bb10530bf5a517c499f6e.ctex"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_40df4"]
 size = Vector2(13, 18)
@@ -91,10 +93,9 @@ _data = {
 script = ExtResource("1_ft57w")
 
 [node name="Potion" type="StaticBody2D" parent="." unique_id=1067066266]
-position = Vector2(570, 457)
+position = Vector2(573, 328.00003)
 scale = Vector2(3, 3)
 input_pickable = true
-metadata/_edit_lock_ = true
 
 [node name="PotionLiquid" type="Sprite2D" parent="Potion" unique_id=49710663]
 material = ExtResource("2_ft57w")
@@ -120,28 +121,29 @@ shape = SubResource("RectangleShape2D_wq45t")
 metadata/_edit_lock_ = true
 
 [node name="Cork" type="RigidBody2D" parent="." unique_id=1387004191]
-position = Vector2(825, 603)
+position = Vector2(801, 475)
 input_pickable = true
 script = ExtResource("2_2j23a")
 
 [node name="CorkSprite" type="Sprite2D" parent="Cork" unique_id=1680388138]
 scale = Vector2(3, 3)
-texture = ExtResource("3_2j23a")
+texture = SubResource("CompressedTexture2D_7rf0y")
 metadata/_edit_lock_ = true
 
 [node name="HitCollisionShape" type="CollisionShape2D" parent="Cork" unique_id=2084688294]
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_40df4")
+debug_color = Color(0, 0.6, 0.69803923, 0)
 metadata/_edit_lock_ = true
 
 [node name="HoverCollisionShape" type="CollisionShape2D" parent="Cork" unique_id=1751446309]
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_2j23a")
-debug_color = Color(0.9543254, 1.347661e-06, 0.5515211, 0.41960785)
+debug_color = Color(0.9529412, 0, 0.5529412, 0)
 metadata/_edit_lock_ = true
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=2072826939]
-position = Vector2(577, 638)
+position = Vector2(577.00006, 507.99997)
 scale = Vector2(20.351822, -0.4488665)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=239908051]
@@ -149,7 +151,7 @@ shape = SubResource("RectangleShape2D_ypklg")
 metadata/_edit_lock_ = true
 
 [node name="StarParticles2D" type="CPUParticles2D" parent="." unique_id=558531788]
-position = Vector2(568, 346.00003)
+position = Vector2(568, 216.00003)
 scale = Vector2(0.99999994, 1)
 emitting = false
 amount = 12

@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://cn70ydj1ldlau" path="res://assets/fonts/friendlyscribbles.ttf" id="3_0rdsr"]
 [ext_resource type="Texture2D" uid="uid://dwtpbijb8fck1" path="res://assets/gui/bar.png" id="3_70vka"]
 [ext_resource type="StyleBox" uid="uid://cwamv48x5gubl" path="res://resources/containers/progress_bar_fill.tres" id="3_wi4c7"]
+[ext_resource type="Texture2D" uid="uid://bxcmlhbq350vv" path="res://assets/gui/table.png" id="7_wi4c7"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ft57w"]
 texture = ExtResource("3_70vka")
@@ -29,7 +30,7 @@ script = ExtResource("1_s3esy")
 
 [node name="RoundTimer" type="Timer" parent="." unique_id=1742549707]
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=802873795]
+[node name="BackgroundRect" type="TextureRect" parent="." unique_id=802873795]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -102,5 +103,21 @@ bbcode_enabled = true
 text = "9 potions left"
 fit_content = true
 horizontal_alignment = 2
+
+[node name="TableTexture" type="TextureRect" parent="." unique_id=282603332]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -47.0
+offset_top = 27.000061
+offset_right = 49.0
+offset_bottom = 91.00006
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(6, 6)
+pivot_offset = Vector2(48, 60)
+texture = ExtResource("7_wi4c7")
 
 [connection signal="timeout" from="RoundTimer" to="." method="_on_round_timer_timeout"]

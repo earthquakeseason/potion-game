@@ -9,10 +9,14 @@ const ROUND_COMPLETE_SCREEN = preload("uid://ba8w116ntbkex")
 const NEXT_UP_CONTAINER_BASE = preload("uid://dmffrccp1rsgw")
 const NEXT_UP_CONTAINER_CURRENT = preload("uid://cuc63iatlc1ai")
 const POTION_BOTTLING = preload("uid://c47r5qe8xe2ah")
+const OPTIONS = preload("res://scenes/options.tscn")
 
 var round_time: float
 var game_scene: Node
+var options_scene: Node
+var round_complete_scene: Node
 var selected_potion: Potion
+
 @onready var demand_label: RichTextLabel = $GameDetailsContainer/VBoxContainer/DemandLabel
 @onready var potion_label: Label = $GameDetailsContainer/VBoxContainer/PotionLabel
 @onready var next_up_h_box: HBoxContainer = $NextUpContainer/HBoxContainer
@@ -20,19 +24,32 @@ var selected_potion: Potion
 func _ready() -> void:
 	GameEvents.complete_attempt.connect(_on_complete_attempt)
 	GameEvents.next_round.connect(_on_next_round)
+	GameEvents.change_pause_state.connect(_on_pause_state_changed)
+	
+	options_scene = OPTIONS.instantiate()
+	
 	start_round()
 	start_turn()
 
 func _process(_delta: float) -> void:
 	$RoundTimeProgress.value = 100 * ($RoundTimer.time_left / round_time)
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("escape"):
+		if GameInfo.game_paused:
+			GameEvents.emit_change_pause_state(false)
+			remove_child(options_scene)
+		else:
+			GameEvents.emit_change_pause_state(true)
+			add_child(options_scene)
+
 func _on_complete_attempt(successful: bool) -> void:
 	if successful:
 		GameInfo.increment_turn()
 		GameInfo.update_time_left($RoundTimer.time_left)
 		if GameInfo.round_over:
-			var round_complete: Node = ROUND_COMPLETE_SCREEN.instantiate()
-			add_child(round_complete)
+			round_complete_scene = ROUND_COMPLETE_SCREEN.instantiate()
+			add_child(round_complete_scene)
 			$RoundTimer.paused = true
 		else:
 			# remove previous scene
@@ -88,14 +105,17 @@ func start_turn() -> void:
 	match minigame.minigame_type:
 		Minigame.MinigameTypes.TYPING:
 			game_scene = minigame.scene.instantiate()
+			change_table_dim_state(false)
 			text = "Type!"
 
 		Minigame.MinigameTypes.DRAWING:
 			game_scene = DRAWING_SCREEN.instantiate()
+			change_table_dim_state(true)
 			text = "Draw!"
 
 		Minigame.MinigameTypes.BOTTLING:
 			game_scene = POTION_BOTTLING.instantiate()
+			change_table_dim_state(false)
 			text = "Bottle!"
 
 	add_child(game_scene)
@@ -111,3 +131,14 @@ func start_turn() -> void:
 
 func _on_round_timer_timeout() -> void:
 	get_tree().change_scene_to_file("res://scenes/lose_screen.tscn")
+
+func change_table_dim_state(dimmed_table: bool) -> void:
+	var tween: Tween = create_tween()
+	if dimmed_table:
+		tween.tween_property($TableTexture, "self_modulate", Color(0.4, 0.4, 0.4, 1.0), 0.2)
+	else:
+		tween.tween_property($TableTexture, "self_modulate", Color(1.0, 1.0, 1.0, 1.0), 0.2)
+
+func _on_pause_state_changed(paused: bool) -> void:
+	if not has_node("RoundCompleteScreen"):
+		$RoundTimer.paused = paused

@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://dta5ip462b7ai" path="res://scripts/round_complete_screen.gd" id="1_wkbhf"]
 [ext_resource type="Shader" uid="uid://dbhinq5lkkte2" path="res://assets/shaders/blur.gdshader" id="2_vvas3"]
 [ext_resource type="LabelSettings" uid="uid://djmdujcyxyia5" path="res://resources/labels/base_label.tres" id="3_cgk0y"]
+[ext_resource type="FontFile" uid="uid://cn70ydj1ldlau" path="res://assets/fonts/friendlyscribbles.ttf" id="4_6hkft"]
+[ext_resource type="StyleBox" uid="uid://b80066dsavh4c" path="res://resources/labels/wizard_button.tres" id="5_fm3ig"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_57rl3"]
 shader = ExtResource("2_vvas3")
@@ -157,10 +159,18 @@ size_flags_horizontal = 4
 layout_mode = 2
 alignment = 2
 
-[node name="Button" type="Button" parent="ContentContainer/VBoxContainerBottom" unique_id=345936711]
+[node name="ContinueButton" type="Button" parent="ContentContainer/VBoxContainerBottom" unique_id=345936711]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
+mouse_default_cursor_shape = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("4_6hkft")
+theme_override_styles/normal = ExtResource("5_fm3ig")
+theme_override_styles/pressed = ExtResource("5_fm3ig")
+theme_override_styles/hover = ExtResource("5_fm3ig")
+theme_override_styles/focus = ExtResource("5_fm3ig")
 text = "Continue"
 
 [node name="ContainerAnimator" type="AnimationPlayer" parent="ContentContainer" unique_id=943797020]
@@ -174,5 +184,5 @@ offset_top = 297.0
 offset_right = 930.0
 offset_bottom = 497.0
 
-[connection signal="pressed" from="ContentContainer/VBoxContainerBottom/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ContentContainer/VBoxContainerBottom/ContinueButton" to="." method="_on_button_pressed"]
 [connection signal="animation_finished" from="ContentContainer/ContainerAnimator" to="." method="_on_animation_player_animation_finished"]

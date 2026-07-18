@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dau3dw7ynlxf4"]
 
-[ext_resource type="Script" uid="uid://cnlq6cprllpiy" path="res://scripts/keyboard/cutting.gd" id="1_t0b7i"]
-[ext_resource type="LabelSettings" uid="uid://djmdujcyxyia5" path="res://resources/labels/base_label.tres" id="2_nai40"]
-[ext_resource type="FontFile" uid="uid://cn70ydj1ldlau" path="res://assets/fonts/friendlyscribbles.ttf" id="3_yyghg"]
+[ext_resource type="Script" uid="uid://cnlq6cprllpiy" path="res://scripts/keyboard/typing.gd" id="1_86mje"]
+[ext_resource type="LabelSettings" uid="uid://djmdujcyxyia5" path="res://resources/labels/base_label.tres" id="2_yhs8d"]
+[ext_resource type="FontFile" uid="uid://cn70ydj1ldlau" path="res://assets/fonts/friendlyscribbles.ttf" id="3_pr0xd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yyghg"]
 bg_color = Color(0.15294118, 0.15294118, 0.15294118, 0.7058824)
@@ -84,8 +84,8 @@ _data = {
 &"press_border_shrink": SubResource("Animation_jxie8")
 }
 
-[node name="BasicTyping" type="Node2D" unique_id=2001079599]
-script = ExtResource("1_t0b7i")
+[node name="Typing" type="Node2D" unique_id=2001079599]
+script = ExtResource("1_86mje")
 
 [node name="NewKeyTimer" type="Timer" parent="." unique_id=1365243089]
 one_shot = true
@@ -94,13 +94,13 @@ one_shot = true
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -203.0
-offset_top = -93.0
-offset_right = 203.0
-offset_bottom = -70.0
+offset_left = -204.0
+offset_top = -173.0
+offset_right = 204.0
+offset_bottom = -150.0
 grow_horizontal = 2
 text = "Press the key before the red square closes."
-label_settings = ExtResource("2_nai40")
+label_settings = ExtResource("2_yhs8d")
 horizontal_alignment = 1
 
 [node name="ButtonContainer" type="Control" parent="." unique_id=525630830]
@@ -109,8 +109,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -40.0
+offset_top = -146.0
 offset_right = 40.0
-offset_bottom = 80.0
+offset_bottom = -66.0
 grow_horizontal = 2
 
 [node name="PressContainer" type="PanelContainer" parent="ButtonContainer" unique_id=75098745]
@@ -132,7 +133,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_yyghg")
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("3_yyghg")
+theme_override_fonts/font = ExtResource("3_pr0xd")
 horizontal_alignment = 1
 
 [node name="PressBorder" type="Panel" parent="ButtonContainer" unique_id=563242633]

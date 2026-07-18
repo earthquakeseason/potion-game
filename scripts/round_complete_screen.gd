@@ -132,9 +132,7 @@ func spawn_text() -> void:
 					label.text = "- Poor drawing (" + str(drawing_score) + "/" + str(PER_SCORE_VALUE) + ")"
 					label.label_settings = BASE_BAD_LABEL
 			2:
-				if corking_score == 0:
-					continue
-				elif corking_score >= 100:
+				if corking_score >= 100:
 					label.text = "+ Fast corking (" + str(corking_score) + "/" + str(PER_SCORE_VALUE) + ")"
 					label.label_settings = BASE_GOOD_LABEL
 				else:

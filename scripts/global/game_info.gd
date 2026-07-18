@@ -14,6 +14,7 @@ var bottled: bool
 var typing_accuracy: int
 var drawing_accuracy: int
 var cork_speed: float
+var game_paused: bool
 
 func _ready() -> void:
 	reset_values()
@@ -29,6 +30,7 @@ func reset_values() -> void:
 	typing_accuracy = 0
 	drawing_accuracy = 0
 	cork_speed = 0.0
+	reset_trackers()
 
 ## run when moving between turns, moves between ingredient, bottling and round over steps
 func increment_turn() -> void:
@@ -61,10 +63,12 @@ func get_max_minigame_score(minigame_type: Minigame.MinigameTypes) -> Dictionary
 	
 	if minigame_type == Minigame.MinigameTypes.BOTTLING:
 		return {"score": 0, "valid": false}
+
 	for ingredient: Ingredient in current_round_details.selected_potion.ingredients:
 		for preperation_minigame: Minigame in ingredient.preperation_minigames:
 			if preperation_minigame.minigame_type == minigame_type:
 				score += 1
+
 	if score == 0:
 		return {"score": 0, "valid": false}
 	return {"score": score, "valid": true}

@@ -3,7 +3,7 @@ extends RigidBody2D
 const ROTATE_AMOUNT: float = deg_to_rad(10.0)
 const MAX_DRAG_SPEED: float = 1500.0
 const DRAG_LINEAR_DAMP: float = 8.0
-const CORK_FINAL_POSITION: Vector2 = Vector2(569.0, 331.0)
+const CORK_FINAL_POSITION: Vector2 = Vector2(572.0, 200.0)
 
 var grabbed: bool = false
 var mouse_over_cork: bool = false
@@ -46,9 +46,11 @@ func _physics_process(delta: float) -> void:
 
 func _on_mouse_entered() -> void:
 	mouse_over_cork = true
+	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
 
 func _on_mouse_exited() -> void:
 	mouse_over_cork = false
+	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_pressed("left_click"):

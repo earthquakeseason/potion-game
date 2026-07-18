@@ -10,6 +10,8 @@
 script = ExtResource("1_uua4o")
 
 [node name="Mortar" type="Sprite2D" parent="." unique_id=2017076277]
+position = Vector2(0, 37.5)
+scale = Vector2(1, 0.6875)
 texture = ExtResource("2_44sse")
 
 [node name="Ingredient" type="Sprite2D" parent="." unique_id=81419208]
@@ -17,9 +19,9 @@ position = Vector2(1, 82)
 texture = ExtResource("3_3bky0")
 
 [node name="Pestle" type="Sprite2D" parent="." unique_id=2132364822]
-position = Vector2(0, -64)
+position = Vector2(0, -15)
 texture = ExtResource("3_44sse")
 
 [node name="MortarFront" type="Sprite2D" parent="." unique_id=1360119412]
-position = Vector2(-1, -1)
+position = Vector2(-1, 47)
 texture = ExtResource("3_e0s5u")

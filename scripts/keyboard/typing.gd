@@ -14,6 +14,7 @@ var key_time: float = 2.1 / (1 + (((float)(GameInfo.round_num)) / 15))
 var first_key: bool = false
 var ingredient_stage_counter: int = 0
 var current_minigame: Minigame
+
 @onready var press_label: Label = $ButtonContainer/PressContainer/PressLabel
 @onready var closing_animation_player: AnimationPlayer = $ButtonContainer/PressBorder/ClosingAnimationPlayer
 
@@ -22,20 +23,20 @@ func _ready() -> void:
 	# why can't i preload these resources? nobody knows
 	if current_minigame == load("res://resources/mechanical/crushing.tres"):
 		var crush_instance: Node = CRUSH.instantiate()
-		crush_instance.position.x = -400 
 		add_child(crush_instance)
 	# technically could be else as ideally it could never be anything else but you never know i guess
 	elif current_minigame == load("res://resources/mechanical/cutting.tres"):
 		var slice_instance: Node = SLICE.instantiate()
-		slice_instance.position.x = -400 
+		slice_instance.position.x = 150 
 		add_child(slice_instance)
-
+		
+	GameEvents.change_pause_state.connect(_on_pause_state_changed)
 	position = get_viewport().get_visible_rect().size / 2
 	first_key = true
 	get_new_key()
 
 func _input(event) -> void:
-	if event is InputEventKey:
+	if event is InputEventKey and not event.is_action_pressed("escape"):
 		# because inputeventkey triggers when keys are released and pressed
 		if not event.echo and not event.is_released():
 			if event.physical_keycode == chosen_key:
@@ -43,16 +44,13 @@ func _input(event) -> void:
 				score += score_gained
 				if score < BASE_MAX_SCORE:
 					get_new_key()
-					print("original: " + str(ingredient_stage_counter))
 					ingredient_stage_counter += score_gained
-					print("new: " + str(ingredient_stage_counter))
 				else:
 					GameEvents.emit_minigame_complete_attempt(true)
 					GameInfo.typing_accuracy += 1
 				if ingredient_stage_counter >= float(BASE_MAX_SCORE) / 6:
 					ingredient_stage_counter = 0
 					GameEvents.emit_increment_mechanical_stage(true)
-					print("trigged")
 				else:
 					GameEvents.emit_increment_mechanical_stage(false)
 			else:
@@ -102,3 +100,10 @@ func key_fail() -> void:
 	get_new_key()
 
 func round_to_dec(num, digit: int): return round(num * pow(10.0, digit)) / pow(10.0, digit)
+
+func _on_pause_state_changed(paused: bool) -> void:
+	if paused:
+		closing_animation_player.pause()
+	else:
+		closing_animation_player.play()
+	$NewKeyTimer.paused = paused

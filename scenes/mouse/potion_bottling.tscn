@@ -90,7 +90,8 @@ _data = {
 &"potion_fade_out": SubResource("Animation_7rf0y")
 }
 
-[node name="PotionBottling" type="Node2D" unique_id=396043944]
+[node name="PotionBottling" type="CanvasLayer" unique_id=907188558]
+layer = 2
 script = ExtResource("1_ft57w")
 
 [node name="Potion" type="StaticBody2D" parent="." unique_id=1067066266]
@@ -182,10 +183,10 @@ libraries/ = SubResource("AnimationLibrary_ft57w")
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 365.0
-offset_top = 141.0
-offset_right = 773.0
-offset_bottom = 164.0
+offset_left = -204.0
+offset_top = 154.0
+offset_right = 204.0
+offset_bottom = 177.0
 grow_horizontal = 2
 text = "Drag the cork into the potion's slot."
 label_settings = ExtResource("8_ft57w")

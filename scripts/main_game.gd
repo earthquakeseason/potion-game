@@ -53,6 +53,7 @@ func _on_complete_attempt(successful: bool) -> void:
 		GameInfo.update_time_left($RoundTimer.time_left)
 		if GameInfo.round_over:
 			round_complete_scene = ROUND_COMPLETE_SCREEN.instantiate()
+			await get_tree().process_frame
 			add_child(round_complete_scene)
 			$RoundTimer.paused = true
 		else:

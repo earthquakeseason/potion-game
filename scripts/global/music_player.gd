@@ -13,4 +13,4 @@ func _on_finished() -> void:
 	play()
 
 func _on_settings_updated() -> void:
-	volume_db = 0.0
+	volume_db = lerp(-80.0, 0.0, Settings.music_volume)

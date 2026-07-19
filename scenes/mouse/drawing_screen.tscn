@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dwobt7r1ywjtw"]
 
 [ext_resource type="Script" uid="uid://btnfcckv1aubd" path="res://scripts/mouse/drawing_screen.gd" id="1_3th5t"]
-[ext_resource type="PackedScene" uid="uid://2u4454j5rste" path="res://scenes/mouse/sigil_drawing.tscn" id="2_waemk"]
+[ext_resource type="Script" uid="uid://bp45y5ye2jq27" path="res://scripts/mouse/sigil_drawing.gd" id="2_ilsax"]
 [ext_resource type="FontFile" uid="uid://cn70ydj1ldlau" path="res://assets/fonts/friendlyscribbles.ttf" id="3_enhgp"]
 [ext_resource type="LabelSettings" uid="uid://djmdujcyxyia5" path="res://resources/labels/base_label.tres" id="4_0kc3g"]
 [ext_resource type="Texture2D" uid="uid://o31m7lgehvto" path="res://assets/gui/note.png" id="4_3th5t"]
@@ -9,10 +9,31 @@
 [ext_resource type="StyleBox" uid="uid://b80066dsavh4c" path="res://resources/labels/wizard_button.tres" id="5_ilsax"]
 [ext_resource type="Texture2D" uid="uid://dykd643bevbs" path="res://assets/sigils/juicing.png" id="5_waemk"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilsax"]
+bg_color = Color(0.4117647, 0.003921569, 0.53333336, 0.78431374)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.78261423, 0.782519, 0.21778119, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
 [node name="DrawingScreen" type="CanvasLayer" unique_id=420768995]
 script = ExtResource("1_3th5t")
 
-[node name="SigilDrawing" parent="." unique_id=1566019245 instance=ExtResource("2_waemk")]
+[node name="SigilDrawing" type="Node2D" parent="." unique_id=645038718]
+
+[node name="SigilCanvas" type="Sprite2D" parent="SigilDrawing" unique_id=146931285]
+script = ExtResource("2_ilsax")
+
+[node name="PathStars" type="Node2D" parent="SigilDrawing" unique_id=1825353776]
 
 [node name="ResultLabel" type="Label" parent="." unique_id=42137218]
 anchors_preset = 7
@@ -58,6 +79,7 @@ theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("5_ilsax")
 theme_override_styles/pressed = ExtResource("5_ilsax")
 theme_override_styles/hover = ExtResource("5_ilsax")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ilsax")
 theme_override_styles/focus = ExtResource("5_ilsax")
 text = "Submit"
 script = ExtResource("4_ilsax")
@@ -75,4 +97,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("5_waemk")
 
+[connection signal="drawn_on" from="SigilDrawing/SigilCanvas" to="SubmitButton" method="_on_sigil_canvas_drawn_on"]
 [connection signal="pressed" from="SubmitButton" to="SubmitButton" method="_on_pressed"]
+[connection signal="pressed" from="SubmitButton" to="SigilDrawing/SigilCanvas" method="_on_submit_button_pressed"]

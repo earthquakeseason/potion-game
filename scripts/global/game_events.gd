@@ -1,16 +1,11 @@
 extends Node
 
-signal submit_pressed
 signal complete_attempt
 signal next_round
 signal round_transition
 signal increment_mechanical_stage
 signal change_pause_state
 signal setting_updated
-
-# debugger gets upset if i dont use it anywhere...
-func emit_submit_pressed() -> void:
-	submit_pressed.emit()
 
 func emit_minigame_complete_attempt(successful: bool) -> void:
 	complete_attempt.emit(successful)

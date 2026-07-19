@@ -27,7 +27,7 @@ func _ready() -> void:
 	# technically could be else as ideally it could never be anything else but you never know i guess
 	elif current_minigame == load("res://resources/mechanical/cutting.tres"):
 		var slice_instance: Node = SLICE.instantiate()
-		slice_instance.position.y = 50 
+		slice_instance.position.y = 150
 		add_child(slice_instance)
 		
 	GameEvents.change_pause_state.connect(_on_pause_state_changed)
@@ -97,7 +97,7 @@ func key_fail() -> void:
 	add_child(result_label)
 	result_label.show_result("Miss")
 	GameInfo.typing_accuracy -= 1
-	score -= min(150, score)
+	score -= min(50, score)
 	get_new_key()
 
 func round_to_dec(num, digit: int): return round(num * pow(10.0, digit)) / pow(10.0, digit)

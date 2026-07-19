@@ -24,7 +24,7 @@ func _ready() -> void:
 	continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
 
 func _process(delta: float) -> void:
-	if not stopwatch_stopped:
+	if not stopwatch_stopped and not GameInfo.game_paused:
 		time_elapsed += delta
 
 func _physics_process(delta: float) -> void:
@@ -54,6 +54,9 @@ func _on_mouse_exited() -> void:
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 
 func _input(event: InputEvent) -> void:
+	if GameInfo.game_paused:
+		return
+	
 	if Input.is_action_pressed("left_click"):
 		if mouse_over_cork:
 			grabbed = true

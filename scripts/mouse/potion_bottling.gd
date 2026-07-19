@@ -1,4 +1,4 @@
-extends Node2D
+extends CanvasLayer
 
 @onready var cork_sprite: Sprite2D = $Cork/CorkSprite
 @onready var potion_liquid: Sprite2D = $Potion/PotionLiquid
@@ -7,7 +7,7 @@ func _ready() -> void:
 	GameEvents.round_transition.connect(_on_round_transition)
 	GameEvents.setting_updated.connect(on_setting_updated)
 
-	$InstructionLabel.text = "Drag the cork into the potion's slot."
+	$InstructionLabel.text = "Drag the cork into the potion's slot. Scroll to rotate the cork."
 	$InstructionLabel.visible = Settings.show_tutorials
 
 func _on_round_transition() -> void:

@@ -2,7 +2,7 @@ extends Node
 
 const PHYSICAL_KEYCODE_OPTIONS: Array[int] = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]
 const MAX_TIME: int = 45
-const ROUND_COUNT: int = 7
+const ROUND_COUNT: int = 6
 const VICTORY_SCREEN = preload("res://scenes/victory_screen.tscn")
 
 var round_num: int

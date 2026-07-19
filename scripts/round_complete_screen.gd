@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 const STAR_EMPTY = preload("uid://clxvuytl3xnv4")
 const STAR = preload("uid://cp4ph5k08jxmn")
@@ -28,6 +28,7 @@ var max_score: int
 signal stars_fallen
 
 func _ready() -> void:
+	visible = true
 	container_animator.play("complete_appear")
 	title_label.text = "You successfully brewed " + GameInfo.current_round_details.selected_potion.name
 	time_label.text = "Time left: " + str(round(GameInfo.current_round_details.time)) + "s"
@@ -168,5 +169,6 @@ func _on_button_pressed() -> void:
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "complete_disappear":
+		visible = false
 		GameEvents.emit_next_round()
 		queue_free()

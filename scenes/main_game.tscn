@@ -21,9 +21,9 @@ expand_margin_bottom = 3.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 2
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0rdsr"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wi4c7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0rdsr"]
 
 [node name="MainGame" type="CanvasLayer" unique_id=603355536]
 script = ExtResource("1_s3esy")
@@ -61,18 +61,6 @@ offset_right = 92.0
 offset_bottom = 36.0
 text = "Time left:"
 label_settings = ExtResource("2_d2op2")
-
-[node name="NextUpContainer" type="PanelContainer" parent="." unique_id=1100550112]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 40.0
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_0rdsr")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="NextUpContainer" unique_id=1050507193]
-layout_mode = 2
 
 [node name="GameDetailsContainer" type="PanelContainer" parent="." unique_id=1689190647]
 anchors_preset = 1
@@ -116,9 +104,20 @@ offset_right = 49.0
 offset_bottom = 91.00006
 grow_horizontal = 2
 grow_vertical = 0
-scale = Vector2(6, 6)
 pivot_offset = Vector2(48, 60)
 texture = ExtResource("7_wi4c7")
+
+[node name="NextUpContainer" type="PanelContainer" parent="." unique_id=1100550112]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_0rdsr")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NextUpContainer" unique_id=1050507193]
+layout_mode = 2
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=883633721]
 

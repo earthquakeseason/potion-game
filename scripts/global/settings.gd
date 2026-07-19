@@ -5,4 +5,4 @@ var music_volume: float
 
 func _ready() -> void:
 	show_tutorials = true
-	music_volume = 100.0
+	music_volume = 1.0

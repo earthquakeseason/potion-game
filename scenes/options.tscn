@@ -22,7 +22,7 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tcgly"]
 
 [node name="Options" type="CanvasLayer" unique_id=969676801]
-layer = 2
+layer = 4
 script = ExtResource("1_yjkok")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1152692882]

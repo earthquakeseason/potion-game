@@ -24,19 +24,17 @@ var drawing_brush: Image
 
 @onready var path_stars: Node2D = $"../PathStars"
 
-func _ready() -> void:
-	GameEvents.submit_pressed.connect(_on_submit_pressed)
+signal drawn_on
 
+func _ready() -> void:
 	set_blank_canvas()
 	position = get_viewport().get_visible_rect().size / 2
 	chosen_sigil = GameInfo.get_current_minigame()
 	normalised_template = normalize_points(chosen_sigil.point_cloud)
-
 	# so it isnt direction specific
 	var reversed: Array[Vector2] = chosen_sigil.point_cloud.duplicate()
 	reversed.reverse()
 	normalised_template_reverse = normalize_points(reversed)
-	
 	stroke_brush = create_circle_brush(STROKE_RADIUS, STROKE_COLOR)
 	drawing_brush = create_circle_brush(DRAWING_RADIUS, DRAWING_COLOR)
 
@@ -54,7 +52,7 @@ func create_circle_brush(radius: int, color: Color) -> Image:
 
 func paint_texture(pos: Vector2i) -> void:
 	draw_image_brush(stroke_brush, pos, STROKE_RADIUS)
-	draw_image_brush(drawing_brush, pos, DRAWING_RADIUS)
+	#draw_image_brush(drawing_brush, pos, DRAWING_RADIUS)
 
 func draw_image_brush(brush: Image, pos: Vector2i, radius: int) -> void:
 	background_image.blit_rect_mask(brush, brush, Rect2i(Vector2i.ZERO, brush.get_size()), pos - Vector2i(radius, radius))
@@ -69,6 +67,7 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("left_click"):
 		var local_pos = to_local(event.position)
 		if !get_rect().has_point(local_pos): return
+		drawn_on.emit()
 		set_blank_canvas()
 		var pos = to_local(event.position)
 		var impos = pos + get_rect().size / 2.0
@@ -92,7 +91,7 @@ func _input(event: InputEvent) -> void:
 				#if get_global_mouse_position().distance_to(path_star_postions[point]) < 1.0:
 					#path_stars.get_child(point)
 
-func _on_submit_pressed() -> void:
+func _on_submit_button_pressed() -> void:
 	if recognizable():
 		GameEvents.emit_minigame_complete_attempt(true)
 		GameInfo.drawing_accuracy += 1

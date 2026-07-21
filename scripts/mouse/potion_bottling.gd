@@ -7,7 +7,7 @@ func _ready() -> void:
 	GameEvents.round_transition.connect(_on_round_transition)
 	GameEvents.setting_updated.connect(on_setting_updated)
 
-	$InstructionLabel.text = "Drag the cork into the potion's slot. Scroll to rotate the cork."
+	$InstructionLabel.text = "Drag the cork into the potion's slot [color=#9f46e8]rightside up[/color].\nScroll to rotate the cork."
 	$InstructionLabel.visible = Settings.show_tutorials
 
 func _on_round_transition() -> void:

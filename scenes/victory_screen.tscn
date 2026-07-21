@@ -72,6 +72,7 @@ theme_override_fonts/font = ExtResource("2_pfcnd")
 theme_override_font_sizes/font_size = 64
 text = "You did it!
 (You win)"
+horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="." unique_id=1745021955]
 anchors_preset = 7

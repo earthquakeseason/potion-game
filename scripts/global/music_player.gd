@@ -6,6 +6,7 @@ const SONG_OPTIONS: Array[AudioStreamWAV] = [BRAIN_EMPTY, TAPERED_OUT]
 
 func _ready() -> void:
 	GameEvents.setting_updated.connect(_on_settings_updated)
+	set_volume()
 	_on_finished()
 
 func _on_finished() -> void:
@@ -13,4 +14,7 @@ func _on_finished() -> void:
 	play()
 
 func _on_settings_updated() -> void:
+	set_volume()
+
+func set_volume() -> void:
 	volume_db = lerp(-80.0, 0.0, Settings.music_volume)

@@ -28,4 +28,8 @@ func _on_game_event_increment(shrink: bool) -> void:
 	tween.tween_property($Pestle, "position", Vector2(INITIAL_POSITION), 0.1)
 
 func update_bottom_anchor() -> void:
+	if $Ingredient.texture == null:
+		print("something has gone horribly wrong, was no final stage texture set?")
+		return
+
 	$Ingredient.offset.y = ((115.0 - $Ingredient.position.y) / $Ingredient.scale.y) - ($Ingredient.texture.get_size().y * 0.5)

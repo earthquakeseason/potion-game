@@ -7,7 +7,7 @@
 [ext_resource type="Material" uid="uid://bg2tyj2jvxhra" path="res://resources/shader_materials/potion_material.tres" id="2_ft57w"]
 [ext_resource type="Texture2D" uid="uid://cp4ph5k08jxmn" path="res://assets/symbols/star.png" id="4_2j23a"]
 [ext_resource type="Script" uid="uid://dchw64sops14i" path="res://scripts/mouse/star_particles_2d.gd" id="5_ypklg"]
-[ext_resource type="LabelSettings" uid="uid://djmdujcyxyia5" path="res://resources/labels/base_label.tres" id="8_ft57w"]
+[ext_resource type="FontFile" uid="uid://cn70ydj1ldlau" path="res://assets/fonts/friendlyscribbles.ttf" id="8_ft57w"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_wq45t"]
 
@@ -179,17 +179,22 @@ script = ExtResource("5_ypklg")
 root_node = NodePath("../Potion")
 libraries/ = SubResource("AnimationLibrary_ft57w")
 
-[node name="InstructionLabel" type="Label" parent="." unique_id=839995579]
+[node name="InstructionLabel" type="RichTextLabel" parent="." unique_id=3399953]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -204.0
 offset_top = 154.0
-offset_right = 204.0
-offset_bottom = 177.0
+offset_right = 231.0
+offset_bottom = 213.0
 grow_horizontal = 2
-text = "Drag the cork into the potion's slot."
-label_settings = ExtResource("8_ft57w")
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/normal_font = ExtResource("8_ft57w")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "Drag the cork into the potion's slot rightside up."
 horizontal_alignment = 1
 
 [connection signal="body_entered" from="Potion/PotionOpening" to="Cork" method="_on_potion_opening_body_entered"]

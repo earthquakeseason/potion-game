@@ -22,6 +22,7 @@ func _ready() -> void:
 	# feels less harsh than CCD_MODE_CAST_SHAPE (and is supposedly faster), check up on this
 	# again later
 	continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
+	rotation = randf_range(-90, 90)
 
 func _process(delta: float) -> void:
 	if not stopwatch_stopped and not GameInfo.game_paused:
@@ -59,6 +60,8 @@ func _input(event: InputEvent) -> void:
 	
 	if Input.is_action_pressed("left_click"):
 		if mouse_over_cork:
+			if not grabbed:
+				target_rotation = rotation
 			grabbed = true
 	else:
 		grabbed = false

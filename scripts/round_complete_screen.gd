@@ -71,6 +71,7 @@ func spawn_stars() -> void:
 
 		if score >= (max_score * 0.15) + (i * (max_score * 0.23)):
 			star.texture = STAR
+			GameInfo.stars_counted += 1
 		else:
 			star.texture = STAR_EMPTY
 		star.expand_mode = TextureRect.EXPAND_IGNORE_SIZE

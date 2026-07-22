@@ -2,7 +2,7 @@ extends Node
 
 const PHYSICAL_KEYCODE_OPTIONS: Array[int] = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]
 const MAX_TIME: int = 45
-const ROUND_COUNT: int = 6
+const ROUND_COUNT: int = 2
 const VICTORY_SCREEN = preload("res://scenes/victory_screen.tscn")
 
 var round_num: int
@@ -18,6 +18,7 @@ var drawing_accuracy: int
 var cork_speed: float
 var game_paused: bool
 var selected_potions: Array[Potion]
+var stars_counted: int
 
 func _ready() -> void:
 	reset_values()
@@ -35,6 +36,9 @@ func reset_values() -> void:
 	cork_speed = 0.0
 	reset_trackers()
 	selected_potions.clear()
+	round_ingredient_minigame_option_indexes.clear()
+	round_over = false
+	stars_counted = 0
 
 ## run when moving between turns, moves between ingredient, bottling and round over steps
 func increment_turn() -> void:

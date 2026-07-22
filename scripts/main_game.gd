@@ -58,7 +58,6 @@ func _on_complete_attempt(successful: bool) -> void:
 			round_complete_scene = ROUND_COMPLETE_SCREEN.instantiate()
 			await get_tree().process_frame
 			add_child(round_complete_scene)
-			$RoundTimer.paused = true
 		else:
 			# remove previous scene
 			game_scene.queue_free()
@@ -129,6 +128,7 @@ func start_turn() -> void:
 
 		Minigame.MinigameTypes.BOTTLING:
 			game_scene = POTION_BOTTLING.instantiate()
+			game_scene.display_stars.connect(_on_stars_particles_displayed)
 			change_table_dim_state(false)
 			text = "Bottle!"
 
@@ -142,6 +142,10 @@ func start_turn() -> void:
 	
 	if current_ingredient_position > 0:
 		next_up_h_box.get_child(current_ingredient_position - 1).add_theme_stylebox_override("panel", NEXT_UP_CONTAINER_BASE)
+
+# so the timer the is stopped the moment the round is (actually) over
+func _on_stars_particles_displayed() -> void:
+	$RoundTimer.paused = true
 
 func _on_round_timer_timeout() -> void:
 	get_tree().change_scene_to_file("res://scenes/lose_screen.tscn")

@@ -10,5 +10,5 @@ script = ExtResource("2_0qy1j")
 name = "Potion of Invisibility"
 ingredients = Array[ExtResource("1_4p00p")]([ExtResource("2_gouix"), ExtResource("3_g40ub")])
 potion_time_modification = 1.1
-potion_color = Color(0.4630682, 0.4630682, 0.4630682, 1)
+potion_color = Color(0.4627451, 0.4627451, 0.4627451, 0.6862745)
 metadata/_custom_type_script = "uid://bfmc8av4kl1sw"
